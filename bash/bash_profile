@@ -1,0 +1,55 @@
+# Load env values.
+source /etc/environment
+
+# 256 color term.
+export TERM=xterm-256color
+
+# colors in ls
+export CLICOLOR=1
+
+# Make vim the default editor
+export EDITOR="vim"
+export VISUAL="vim"
+
+# Larger bash history
+export HISTSIZE=10000
+export HISTFILESIZE=$HISTSIZE
+export HISTCONTROL="ignoreboth:erasedups"
+export HISTIGNORE="ls:cd:pwd:exit:date:* --help:za *:ag *:\
+                   kill *:pkill *:aa *:ps *:..:dl:h:which *:man *:\
+                   gcm *:gp:ga *:gcm *:\
+                   ipython:python:python3"
+
+# Prefer US English and use UTF-8
+export LANG="en_US"
+export LC_ALL="en_US.UTF-8"
+
+# Case-insensitive globbing (used in pathname expansion)
+shopt -s nocaseglob
+
+# Append to the Bash history file, rather than overwriting it
+shopt -s histappend
+
+# Enable some Bash 4 features when possible:
+# * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
+# * Recursive globbing, e.g. `echo **/*.txt`
+for option in autocd globstar; do
+	shopt -s "$option" 2> /dev/null
+done
+
+# vi keybindings for bash
+set -o vi
+
+# Setup pyenv
+# Actual initialization necessary for
+# virtualenvs is handled (lazily)
+# in bash/functions#aa
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+
+# setup nvm / node
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+[[ -r ~/.bashrc ]] && . ~/.bashrc

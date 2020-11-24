@@ -1,0 +1,17 @@
+.tags
+.tags*
+*.swp
+*.swo
+*.pyc
+*.egg-info
+.sass-cache
+.webassets-cache
+node_modules
+bundle.js*
+dist
+env
+secret
+**/static/css/style.css
+build.js
+dump.rdb
+*.Rproj

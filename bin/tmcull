@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+COMPUTER_NAME=$(scutil --get ComputerName)
+NBACKUPS=$(tmutil listbackups | grep "$COMPUTER_NAME" | wc -l)
+OLDEST_BACKUP=$(tmutil listbackups | grep "$COMPUTER_NAME" | head -n1)
+LATEST_BACKUP=$(tmutil latestbackup)
+echo Latest backup: $LATEST_BACKUP
+
+if [[ -n "$LATEST_BACKUP" && "$LATEST_BACKUP" != "$OLDEST_BACKUP" ]]; then
+     echo -n "$NBACKUPS backups. Delete oldest: ${OLDEST_BACKUP##*/} [y/N]? "
+     read answer
+     case $answer in
+         y*)
+             echo Running: sudo tmutil delete "$OLDEST_BACKUP"
+             sudo time tmutil delete "$OLDEST_BACKUP"
+             ;;
+         *)
+             echo No change
+             ;;
+     esac
+ else
+     echo "No backup available for deletion"
+ fi

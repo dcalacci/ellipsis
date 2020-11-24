@@ -1,0 +1,65 @@
+if tput setaf 1 &> /dev/null; then
+	tput sgr0
+	if [[ $(tput colors) -ge 256 ]] 2>/dev/null; then
+		BG=$(tput setab 0)
+		RED=$(tput setaf 1)
+		YELLOW=$(tput setaf 3)
+		GREEN=$(tput setaf 10)
+        PINK=$(tput setaf 5)
+		BLUE=$(tput setaf 12)
+		FORE=$(tput setaf 15)
+	else
+		RED=$(tput setaf 0)
+		YELLOW=$(tput setaf 3)
+		GREEN=$(tput setaf 2)
+        PINK=$(tput setaf 5)
+		BLUE=$(tput setaf 12)
+		FORE=$(tput setaf 15)
+	fi
+	BOLD=$(tput bold)
+	RESET=$(tput sgr0)
+else
+	RED="\033[1;31m"
+	YELLOW="\033[1;33m"
+	GREEN="\033[1;32m"
+	BLUE="\033[1;34m;"
+	FORE="\033[1;37m"
+	BOLD=""
+	RESET="\033[m"
+fi
+
+export RED
+export YELLOW
+export GREEN
+export BLUE
+export PINK
+export FORE
+export BOLD
+export RESET
+
+function parse_git_dirty() {
+	[[ $(git status 2> /dev/null | tail -n1) != *"working"*"clean"* ]] && echo "*"
+}
+
+function parse_git_branch() {
+	git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
+}
+
+# Current virtualenv
+function parse_venv() {
+    if [[ $VIRTUAL_ENV != "" ]]; then
+        # Strip out the path and just leave the env name
+        echo "(${VIRTUAL_ENV##*/}) "
+    fi
+}
+
+function update_prompt() {
+    # ref:
+    # \u = user
+    # \h = host
+    # \w = cwd (full path)
+    # \W = cwd (current dir only)
+    export PS1="\[$YELLOW\]$(parse_venv)\[$RESET\]\[$PINK\][\h]\[$RESET\]:\[$YELLOW\]\w\[$RESET\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \":\")\[$WHITE\]\$(parse_git_branch)\[$RESET\] \[$PINK\]> \[$RESET\]"
+}
+export -f update_prompt
+export PROMPT_COMMAND='update_prompt'

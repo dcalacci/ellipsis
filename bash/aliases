@@ -1,0 +1,35 @@
+# Easier navigation
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias -- -="cd -"
+
+# To avoid accidentally overwriting files
+alias mv="mv -i"
+
+# Git
+alias ga="git add"
+alias gaa="git add -A"
+alias gcm="git commit -m"
+alias gp="git push"
+alias gpl="git pull"
+alias gcb="git checkout -b"
+alias gm="git merge --no-ff"
+alias gch="git checkout"
+alias gbd="git branch -d"
+alias gds="git diff --staged"
+alias gsu="git submodule foreach git pull origin master"
+
+# Shortcuts
+alias nb="jupyter notebook"
+alias py="python"
+alias t="tmux attach || tmux new"
+alias ipy="ipython"
+alias r="ranger"
+
+# Always use color output for `ls`
+#alias ls="command ls --color"
+
+# enable aliases to be sudo’ed
+alias sudo='sudo '

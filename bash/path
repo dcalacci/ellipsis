@@ -1,0 +1,26 @@
+# go
+export PATH="/usr/local/go/bin:$PATH"
+export PATH="~/.local/bin:$PATH"
+export PATH="~/.bin:$PATH"
+export PATH="~/usr/lib/android-sdk/tools/bin:$PATH"
+export PATH="~/usr/lib/android-sdk/platform-tools:$PATH"
+
+# Add /usr/local/sbin to path.
+export PATH="/usr/local/sbin:$PATH"
+export PATH="$PATH:/usr/sbin:/usr/bin:/sbin:/bin"
+
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib64"
+export CUDA_HOME="/usr/local/cuda"
+
+# texlive (for linux)
+#export PATH=/usr/local/texlive/2015/bin/x86_64-linux:$PATH
+
+# cargo/rust
+export PATH="$HOME/.cargo/bin:$PATH"
+
+# Keep this last so that /usr/local/bin is
+# at the beginning of your path.
+export PATH="/usr/local/bin:$PATH"
+
+# Add `~/.bin` to the `$PATH`
+export PATH="$HOME/.bin:$PATH"

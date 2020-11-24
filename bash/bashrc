@@ -1,0 +1,32 @@
+# Initialize fzf
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+export FZF_CTRL_T_COMMAND="fd . $HOME"
+export FZF_ALT_C_COMMAND="fd -t d . $HOME"
+export FZF_DEFAULT_COMMAND='rg --files --follow --glob "!.git/*"'
+
+# Bash completion
+[ -f /etc/bash_completion ] && source /etc/bash_completion
+
+# pyenv
+eval "$(pyenv init - bash --no-rehash)"
+
+# Autocorrect typos in path names when using `cd`
+shopt -s cdspell
+
+# Load the shell dotfiles, and then some:
+# * ~/.path can be used to extend `$PATH`.
+# * ~/.extra can be used for other settings you don’t want to commit.
+for file in ~/attic/ellipsis/bash/{path,prompt,aliases,functions}; do
+	[ -r "$file" ] && source "$file"
+done
+unset file
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# nvm, lazy loaded
+export NVM_DIR="$HOME/.nvm"
+alias nvm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && nvm'
+alias node='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && node'
+alias npm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && npm'
+
