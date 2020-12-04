@@ -5,6 +5,16 @@
 Set of dotfiles, including various scripts and tools I use on a 2020 macbook air with a very
 unfortunate cooling problem.
 
+## screenshots
+Window manager with multiple terminal screens. active screen is highlighted in pink:
+![multiple terminal windows w/ yabai WM](screenshots/yabai.png)
+working in one terminal in tmux:
+![one terminal window in tmux](screenshots/tmux.png)
+finding a file in a project using `fzf` with a preview window:
+![vim with fzf](screenshots/fzf.png)
+code structure with vista / coc:
+![vim with vista & coc](screenshots/vista.png)
+
 ## vim
 
 After years of using emacs, I gave up, and now I use neovim, and make liberal use of [coc.nvim](https://github.com/neoclide/coc.nvim). It's
