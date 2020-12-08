@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -e
-DIR=$(PWD)
+
+DIR=$(pwd)
 
 read -rep "Are you on mac OS? (y/n) " -n 1
 MAC=$REPLY
@@ -12,9 +13,13 @@ read -rep "Do you want to link from ~/docs ? (y/n) " -n 1
 DOCS=$REPLY
 
 # CASKS & APPS -------------------------------
-if [[ $APPS =~ ^[Yy]$  & $MAC =~ ^[Yy]$ ]]; then
+if [[ $APPS =~ ^[Yy]$ && $MAC =~ ^[Yy]$ ]]; then
     brew cask install ngrok android-studio osxfuse keybase java mactex-no-gui postgres r rstudio sketch slack visual-studio-code vlc xquartz gqrx firefox chromium docker
     brew install skhd yabai ncdu stunnel pyenv wget git-lfs neovim fzf
+fi
+
+if [[ $APPS =~ ^[Yy]$ && $MAC =~ ^[Nn]$ ]]; then
+    sudo apt install git-lfs
 fi
 
 git lfs install
