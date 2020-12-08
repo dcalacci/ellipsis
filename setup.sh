@@ -2,18 +2,22 @@
 set -e
 DIR=$(PWD)
 
+read -rep "Are you on mac OS? (y/n) " -n 1
+MAC=$REPLY
+
 read -rep "Do you want to install apps? (y/n) " -n 1
 APPS=$REPLY
 
 read -rep "Do you want to link from ~/docs ? (y/n) " -n 1
 DOCS=$REPLY
 
-# CASKSS & APPS -------------------------------
-if [[ $APPS =~ ^[Yy]$ ]]; then
+# CASKS & APPS -------------------------------
+if [[ $APPS =~ ^[Yy]$  & $MAC =~ ^[Yy]$ ]]; then
     brew cask install ngrok android-studio osxfuse keybase java mactex-no-gui postgres r rstudio sketch slack visual-studio-code vlc xquartz gqrx firefox chromium docker
     brew install skhd yabai ncdu stunnel pyenv wget git-lfs neovim fzf
-    git lfs install
 fi
+
+git lfs install
 
 # node / nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.0/install.sh | bash
@@ -71,11 +75,6 @@ ln -sf $DIR/ranger/rc.conf ~/.config/ranger/rc.conf
 ln -sf $DIR/ranger/rifle.conf ~/.config/ranger/rifle.conf
 ln -sf $DIR/ranger/scope.sh ~/.config/ranger/scope.sh
 
-# window manager
-echo "Creating yabai and skhd dotfiles..."
-ln -sf $DIR/wm/yabairc ~/.yabairc
-ln -sf $DIR/wm/skhdrc ~/.skhdrc
-
 
 # PYTHON -----------------------------------
 # ipython settings
@@ -115,4 +114,12 @@ if [ ! -f /etc/environment ]; then
     sudo touch /etc/environment
 fi
 
-brew services start skhd yabai
+if [[ $MAC =~ ^[Yy]$ ]]; then
+
+    # window manager for mac osx
+    echo "Creating yabai and skhd dotfiles..."
+    ln -sf $DIR/wm/yabairc ~/.yabairc
+    ln -sf $DIR/wm/skhdrc ~/.skhdrc
+
+    brew services start skhd yabai
+fi
