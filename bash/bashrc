@@ -30,3 +30,8 @@ alias nvm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && nvm'
 alias node='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && node'
 alias npm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && npm'
 
+
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export ANDROID_SDK_ROOT=$HOME/Library/Android/sdk
+# sdkman
+source "$HOME/.sdkman/bin/sdkman-init.sh"

@@ -18,6 +18,12 @@ export CUDA_HOME="/usr/local/cuda"
 # cargo/rust
 export PATH="$HOME/.cargo/bin:$PATH"
 
+# add android tools
+# FOR OSX ONLY
+# TODO: Check if on OSX
+export PATH="$HOME/Library/Android/sdk/platform-tools/:$PATH"
+export PATH="$HOME/Library/Android/sdk/tools/bin/:$PATH"
+
 # Keep this last so that /usr/local/bin is
 # at the beginning of your path.
 export PATH="/usr/local/bin:$PATH"

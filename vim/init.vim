@@ -159,10 +159,12 @@ colorscheme ayu
 highlight Cursor guibg=#0f111a guifg=#eeeeee
 highlight iCursor guifg=#0f111a guibg=#eeeeee
 highlight Pmenu guibg='#00010a' guifg=white              " popup menu colors
-highlight Comment gui=italic cterm=italic               " bold comments
+highlight Comment guibg=#222634 gui=italic cterm=italic               " bold comments
 highlight Normal gui=none
 highlight NonText guibg=none
 highlight clear SignColumn                              " use number color for sign column color
+highlight rComment guibg=#222634 gui=italic cterm=italic               " bold comments
+
 hi Search guibg=#b16286 guifg=#ebdbb2 gui=NONE          " search string highlight color
 autocmd ColorScheme * highlight VertSplit cterm=NONE    " split color
 hi NonText guifg=bg                                     " mask ~ on empty lines
@@ -171,12 +173,13 @@ hi CursorLineNr gui=bold                                " make relative number b
 hi EasyMotionMoveHL guibg=#b16286 guifg=#ebdbb2 gui=NONE
 
 " colors for git (especially the gutter)
-hi DiffAdd  guibg=#eeeeee guifg=#43a047
-hi DiffChange guibg=#eeeeee guifg=#fdd835
-hi DiffRemoved guibg=#eeeeee guifg=#e53935
+hi DiffAdd  guibg=#222634 guifg=#43a047
+hi DiffChange guibg=#222634 guifg=#fdd835
+hi DiffRemoved guibg=#222634 guifg=#e53935
 
 " coc multi cursor highlight color
 hi CocCursorRange guibg=#b16286 guifg=#ebdbb2
+
 
 " performance tweaks
 set nocursorline
@@ -493,6 +496,12 @@ nnoremap <silent> vv <C-w>v
 nnoremap <silent>vv :ls<cr>:vsp<space>\|<space>b<space>
 nnoremap <silent>ss :ls<cr>:sp<space>\|<space>b<space>
 "" slime mappings
+
+"-----------------
+" R config
+"-----------------
+let R_assign = 0
+let Rout_more_colors = 1
 
 "------------------------------------------------------------------------------
 " ipython-cell configuration

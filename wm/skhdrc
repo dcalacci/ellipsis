@@ -81,6 +81,9 @@ cmd - return : /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d
 shift + cmd - m : open /Applications/MailMate.app
 shift + cmd - o : open /Applications/Obsidian.app
 
+# open roam research
+ctrl + cmd - r : open /Applications/Chromium.app https://roamresearch.com/#/app/dcalacci-zettle
+
 # restart yabai and skhd with cmd + r
 shift + ctrl + cmd - r : brew services restart yabai
 shift + ctrl - r : brew services restart skhd
