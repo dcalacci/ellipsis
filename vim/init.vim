@@ -107,7 +107,7 @@ call plug#end()
 "}}}
 
 " ==================== general config ======================== "{{{
-
+set macmeta
 set termguicolors                                       " Opaque Background
 set mouse=a                                             " enable mouse scrolling
 set clipboard+=unnamedplus                              " use system clipboard by default

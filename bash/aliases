@@ -29,7 +29,7 @@ alias ipy="ipython"
 alias r="ranger"
 
 # Always use color output for `ls`
-alias ls="command ls --color"
+# alias ls="command ls --color"
 
 # enable aliases to be sudo’ed
 alias sudo='sudo '

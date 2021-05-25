@@ -37,6 +37,12 @@ for option in autocd globstar; do
 	shopt -s "$option" 2> /dev/null
 done
 
+# set ssh agent
+if [ -z "$SSH_AUTH_SOCK" ] ; then
+  eval `ssh-agent -s`
+  ssh-add
+fi
+
 # vi keybindings for bash
 set -o vi
 
