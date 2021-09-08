@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# cleans up Time Machine backups from mac osx
 
 COMPUTER_NAME=$(scutil --get ComputerName)
 NBACKUPS=$(tmutil listbackups | grep "$COMPUTER_NAME" | wc -l)
