@@ -29,7 +29,6 @@ Plug 'ryanoasis/vim-devicons'                           " pretty icons everywher
 Plug 'gregsexton/MatchTag'                              " highlight matching html tags
 Plug 'scrooloose/nerdtree'
 
-
 "}}}
 
 " ================= Functionalities ================= "{{{
@@ -42,6 +41,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 " snippets
+Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'                               " actual snippets
 
 " visual
@@ -58,7 +58,6 @@ Plug 'hdima/python-syntax'
 Plug 'jpalardy/vim-slime', { 'for': 'python' }
 Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
 
-
 " Writing
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'junegunn/goyo.vim'                                " 'distraction-free' mode for writing
@@ -74,6 +73,7 @@ Plug 'roxma/nvim-yarp'
 Plug 'jalvesaq/Nvim-R'
 Plug 'gaalcaras/ncm-R'
 Plug 'jalvesaq/R-Vim-runtime', {'for': ['r', 'rmd']}
+Plug 'vim-pandoc/vim-pandoc-syntax',  {'for': ['rmd', 'md']}
 
 "Plug 'sheerun/vim-polyglot'
  " For async completion
@@ -83,6 +83,10 @@ Plug 'HerringtonDarkholme/yats.vim'
 Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
 " fuzzy find, searching project, etc
 Plug 'Shougo/denite.nvim'
+
+" fixes some problems with typescript formatting 
+autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 
 " fixes some problems with typescript formatting 
 autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
@@ -176,9 +180,11 @@ autocmd BufRead,BufNewFile *.rmd set filetype=rmarkdown
 
 
 let g:tex_flavor = 'latex'
+
 " Python VirtualEnv
-let g:python_host_prog =  expand('/Users/dcalacci/.pyenv/versions/3.9.0/bin/python')
-let g:python3_host_prog = expand('/Users/dcalacci/.pyenv/versions/3.9.0/bin/python3')
+let g:python_host_prog =  expand('/Users/dcalacci/.pyenv/versions/3.9.1/bin/python')
+let g:python3_host_prog = expand('/Users/dcalacci/.pyenv/versions/3.9.1/bin/python3')
+
 let g:slime_target = "tmux"
 let g:slime_paste_file = "$HOME/.slime_paste"
 

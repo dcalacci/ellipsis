@@ -1,8 +1,8 @@
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	required = true
-	process = git-lfs filter-process
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  required = true
+  process = git-lfs filter-process
 
 [alias]
   st = status -s
@@ -20,14 +20,13 @@
 [core]
   excludesfile = ~/.gitignore
   editor = nvim
-        compression = 0
 
 [apply]
   whitespace = nowarn
 
 [user]
-	email = dcalacci@media.mit.edu
-	name = Dan Calacci
+  email = dcalacci@media.mit.edu
+  name = Dan Calacci
 
 [branch]
   autosetuprebase = always

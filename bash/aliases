@@ -8,6 +8,9 @@ alias -- -="cd -"
 # To avoid accidentally overwriting files
 alias mv="mv -i"
 
+# homebrew for M1
+alias ibrew='arch -x86_64 /usr/local/bin/brew'
+
 # Git
 alias ga="git add"
 alias gaa="git add -A"

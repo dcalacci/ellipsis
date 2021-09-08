@@ -6,26 +6,43 @@ DIR=$(pwd)
 read -rep "Are you on mac OS? (y/n) " -n 1
 MAC=$REPLY
 
+
+if [[ $MAC =~ ^[Yy]$ ]]; then
+    read -rep "Are you on an M1 Mac? (y/n) " -n 1
+    M1=$REPLY
+fi
+
 read -rep "Do you want to install apps? (y/n) " -n 1
 APPS=$REPLY
 
 read -rep "Do you want to link from ~/docs ? (y/n) " -n 1
 DOCS=$REPLY
 
+if [[ $M1 =~ ^[Yy]$ ]]; then
+    echo "Installing rosetta and x86 Homebrew..."
+    # /usr/sbin/softwareupdate --install-rosetta --agree-to-license
+    arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+
+    sudo mkdir -p /opt/homebrew
+    sudo chown -R $(whoami):staff /opt/homebrew
+    cd /opt
+    curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C homebrew
+    export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+    alias ibrew='arch -x86_64 /usr/local/bin/brew'
+fi
+
 # CASKS & APPS -------------------------------
 if [[ $APPS =~ ^[Yy]$ && $MAC =~ ^[Yy]$ ]]; then
-    brew cask install ngrok android-studio osxfuse keybase java mactex-no-gui postgres r rstudio sketch slack visual-studio-code vlc xquartz gqrx firefox chromium docker
-    brew install skhd yabai ncdu stunnel pyenv wget git-lfs neovim fzf
+
+    brew install --cask ngrok android-studio osxfuse keybase mactex-no-gui postgres r rstudio sketch slack visual-studio-code vlc xquartz gqrx firefox chromium docker kitty zotero slack zoom discord obsidian arduino android-studio android-sdk figma
+    brew install ncdu stunnel pyenv wget git-lfs neovim fzf
+    brew install koekeishiya/formulae/skhd
+    brew install koekeishiya/formulae/yabai
 fi
 
 if [[ $APPS =~ ^[Yy]$ && $MAC =~ ^[Nn]$ ]]; then
     sudo apt install git-lfs
 fi
-
-git lfs install
-
-# node / nvm
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.0/install.sh | bash
 
 # GIT ---------------------------------
 echo "Installing git and git-lfs..."
@@ -36,10 +53,24 @@ ln -sf $DIR/git/gitignore ~/.config/git/ignore
 
 # BASH  -----------------------------------
 echo "Setting bash settings..."
-mkdir -p ~/.config/git
 ln -sf $DIR/bash/bash_profile ~/.bash_profile
 ln -sf $DIR/bash/bashrc ~/.bashrc
 ln -sf $DIR/bash/inputrc ~/.inputrc
+
+
+git lfs install
+
+echo "Installing NVM and latest nodejs..."
+# node / nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.0/install.sh | bash
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# install latest node
+nvm install stable
+
+npm install -g yarn expo-cli
 
 # TMUX --------------------
 ln -sf $DIR/tmux/tmux.conf ~/.tmux.conf
@@ -49,6 +80,7 @@ ln -sf $DIR/bin ~/.bin
 
 # VIM ----------------------------------
 echo "Linking NeoVim config..."
+mkdir -p ~/.config/nvim
 ln -sf $DIR/vim/init.vim ~/.config/nvim/init.vim
 ln -sf $DIR/vim/coc-settings.json ~/.config/nvim/coc-settings.json
 
@@ -76,9 +108,11 @@ echo "Say NO to auto-completion for performance"
 #~/.fzf/install
 
 # ranger
+mkdir -p ~/.config/ranger
 ln -sf $DIR/ranger/rc.conf ~/.config/ranger/rc.conf
 ln -sf $DIR/ranger/rifle.conf ~/.config/ranger/rifle.conf
 ln -sf $DIR/ranger/scope.sh ~/.config/ranger/scope.sh
+
 
 
 # PYTHON -----------------------------------
@@ -104,13 +138,22 @@ if [[ $PYENV =~ ^[Yy]$ ]]; then
     fi
 fi
 
+echo "Installing python 3.9.1"
+# CFLAGS="-I$(brew --prefix openssl)/include" \
+# LDFLAGS="-L$(brew --prefix openssl)/lib" \
+pyenv install -v 3.9.1
+
 if [[ $DOCS =~ ^[Yy]$ ]]; then
     mkdir -p ~/.ssh
-    ln -sf ~/docs/ssh/config ~/.ssh/config
-    ln -sf ~/docs/keys/id_rsa.pub ~/.ssh/id_rsa.pub
-    ln -sf ~/docs/keys/id_rsa ~/.ssh/id_rsa
-    ln -sf ~/docs/keys/mailbox ~/.ssh/mailbox
-    ln -sf ~/docs/keys/mailbox.pub ~/.ssh/mailbox.pub
+    cp ~/docs/ssh/config ~/.ssh/config
+    cp ~/docs/keys/id_rsa.pub ~/.ssh/id_rsa.pub
+    cp ~/docs/keys/id_rsa ~/.ssh/id_rsa
+    cp ~/docs/keys/mailbox ~/.ssh/mailbox
+    cp ~/docs/keys/mailbox.pub ~/.ssh/mailbox.pub
+
+    chmod 600 ~/.ssh/id_rsa
+    chmod 600 ~/.ssh/id_rsa.pub
+    chmod 700 ~/.ssh
 fi
 
 if [ ! -f /etc/environment ]; then
@@ -126,5 +169,9 @@ if [[ $MAC =~ ^[Yy]$ ]]; then
     ln -sf $DIR/wm/yabairc ~/.yabairc
     ln -sf $DIR/wm/skhdrc ~/.skhdrc
 
-    brew services start skhd yabai
+    # change shell to bash
+    chsh -s /bin/bash
+
+    brew services start skhd 
+    brew services start yabai
 fi

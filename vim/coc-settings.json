@@ -9,7 +9,8 @@
     "dart",
     "json",
     "markdown",
-    "typescript"
+    "typescript",
+    "python"
   ],
 
   // suggest settings
@@ -53,6 +54,7 @@
   "diagnostic.refreshOnInsertMode": true,
   "diagnostic.signOffset": 999999,
   "diagnostic.errorSign": "✘",
+  "diagnostic.messageTarget": "float",
   "diagnostic.warningSign": "⚠",
   "diagnostic.infoSign": "",
   "diagnostic.hintSign": "ஐ",
