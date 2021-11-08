@@ -37,6 +37,8 @@ export FORE
 export BOLD
 export RESET
 
+PROMPT_DIRTRIM=2
+
 function parse_git_dirty() {
 	[[ $(git status 2> /dev/null | tail -n1) != *"working"*"clean"* ]] && echo "*"
 }
