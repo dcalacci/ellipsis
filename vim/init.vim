@@ -36,6 +36,11 @@ Plug 'scrooloose/nerdtree'
 " auto completion, Lang servers and stuff
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+
+" better diagnostic output 
+Plug 'kyazdani42/nvim-web-devicons'
+" Plug 'folke/trouble.nvim', {'branch': 'main'}
+
 " fuzzy stuff
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -50,7 +55,7 @@ Plug 'Yggdroot/indentLine'                              " show indentation lines
 
 " languages
 "Plug 'tpope/vim-liquid'                                 " liquid language support
-Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}  " better python
+Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
 Plug 'jparise/vim-graphql'
 
 " Interactive python
@@ -76,21 +81,23 @@ Plug 'jalvesaq/R-Vim-runtime', {'for': ['r', 'rmd']}
 Plug 'vim-pandoc/vim-pandoc-syntax',  {'for': ['rmd', 'md']}
 
 "Plug 'sheerun/vim-polyglot'
- " For async completion
-Plug 'Shougo/deoplete.nvim'
-" Modern Web
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
-" fuzzy find, searching project, etc
+" For async completion
+" Plug 'Shougo/deoplete.nvim'
+" For Denite features
 Plug 'Shougo/denite.nvim'
+" Typescript
+"Plug 'leafgarland/typescript-vim'
+"Plug 'peitalin/vim-jsx-typescript'
 
 " fixes some problems with typescript formatting 
-autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
-autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
+autocmd BufEnter *.{js,jsx,ts,tsx,py} :syntax sync fromstart
+autocmd BufLeave *.{js,jsx,ts,tsx,py} :syntax sync clear
 
 " fixes some problems with typescript formatting 
-autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
-autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
+autocmd BufEnter *.{js,jsx,ts,tsx,py} :syntax sync fromstart
+autocmd BufLeave *.{js,jsx,ts,tsx,py} :syntax sync clear
 
 
 " Vim 8 only
@@ -149,7 +156,7 @@ set splitright                                          " open vertical split to
 set splitbelow                                          " open horizontal split to the bottom
 set tw=100                                               " auto wrap lines that are longer than that
 set emoji                                               " enable emojis
-let g:indentLine_setConceal = 0                         " actually fix the annoying markdown ainks conversion
+let g:indentLine_setConceal = 0                         " actually fix the annoying markdown links conversion
 au BufEnter * set fo-=c fo-=r fo-=o                     " stop annoying auto commenting on new lines
 set history=1000                                        " history limit
 set backspace=indent,eol,start                          " sensible backspacing
@@ -181,9 +188,23 @@ autocmd BufRead,BufNewFile *.rmd set filetype=rmarkdown
 
 let g:tex_flavor = 'latex'
 
-" Python VirtualEnv
-let g:python_host_prog =  expand('/Users/dcalacci/.pyenv/versions/3.9.1/bin/python')
-let g:python3_host_prog = expand('/Users/dcalacci/.pyenv/versions/3.9.1/bin/python3')
+" detect system type. Will be 'Windows' if windows, 'Darwin' if mac, and 'Linux' if linux.
+if !exists("g:os")
+    if has("win64") || has("win32") || has("win16")
+        let g:os = "Windows"
+    else
+        let g:os = substitute(system('uname'), '\n', '', '')
+    endif
+endif
+
+if g:os == "Darwin"
+    " Python VirtualEnv
+    let g:python_host_prog =  expand('/Users/dcalacci/.pyenv/versions/3.9.1/bin/python')
+    let g:python3_host_prog = expand('/Users/dcalacci/.pyenv/versions/3.9.1/bin/python3')
+else
+    let g:python_host_prog =  expand('/opt/anaconda3/bin/python')
+    let g:python3_host_prog = expand('/opt/anaconda3/bin/python3')
+endif
 
 let g:slime_target = "tmux"
 let g:slime_paste_file = "$HOME/.slime_paste"
@@ -309,7 +330,7 @@ let g:coc_global_extensions = [
             \'coc-lists',
             \'coc-snippets',
             \'coc-ultisnips',
-            \'coc-python',
+            \'coc-pyright',
             \'coc-clangd',
             \'coc-prettier',
             \'coc-xml',
@@ -317,6 +338,7 @@ let g:coc_global_extensions = [
             \'coc-flutter',
             \'coc-git'
             \]
+
 
 " indentLine
 let g:indentLine_char = '▏'
@@ -337,6 +359,7 @@ let g:auto_save_events = ["FocusLost"]
 
 " semshi settings
 let g:semshi#error_sign	= v:false                       " let ms python lsp handle this
+
 
 "" FZF
 
@@ -374,11 +397,10 @@ let R_bracketed_paste = 1
 let R_in_buffer = 0
 
 " formatting when leaving insert mode 
-" augroup myformatting
-"     autocmd!
-"     autocmd InsertLeave * normal gwap<CR>
-" augroup END
-"}}}
+ " augroup myformatting
+ "     autocmd!
+ "     autocmd InsertLeave * normal gwap<CR>
+ " augroup END
 
 " ======================== Auto Commands ============================= "{{{
 
@@ -409,6 +431,13 @@ autocmd FileType python nnoremap <leader>rn :Semshi rename
 "}}}
 
 " ================== Custom Functions ===================== "{{{
+
+" Formatting selected code.
+" xmap <leader>f  <Plug>(coc-format-selected)
+" nmap <leader>f  <Plug>(coc-format-selected)
+
+" Setup formatexpr specified filetype(s).
+autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
@@ -554,7 +583,7 @@ let Rout_more_colors = 1
 "------------------------------------------------------------------------------
 
 " " map <Leader>s to start IPython
-" nnoremap <Leader>s :SlimeSend1 ipython --matplotlib<CR>
+nnoremap <Leader>s :SlimeSend1 ipython --matplotlib<CR>
 
 " " map <Leader>r to run script
 " nnoremap <Leader>R :IPythonCellRun<CR>
@@ -579,8 +608,8 @@ let Rout_more_colors = 1
 " nnoremap ]c :IPythonCellNextCell<CR>
 
 " " map <Leader>h to send the current line or current selection to IPython
-" nmap <Leader>h <Plug>SlimeLineSend
-" xmap <Leader>h <Plug>SlimeRegionSend
+nmap <Leader>h <Plug>SlimeLineSend
+xmap <Leader>h <Plug>SlimeRegionSend
 
 " " map <Leader>p to run the previous command
 " nnoremap <Leader>p :IPythonCellPrevCommand<CR>
@@ -592,7 +621,7 @@ let Rout_more_colors = 1
 " nnoremap <Leader>d :SlimeSend1 %debug<CR>
 
 " " map <Leader>q to exit debug mode or IPython
-" nnoremap <Leader>q :SlimeSend1 exit<CR>
+nnoremap <Leader>sq :SlimeSend1 exit<CR>
 
 "" coc mappings
 " multi cursor shortcuts

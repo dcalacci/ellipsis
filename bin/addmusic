@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# import songs at directory $1 to beets library 
+# set at ~/.config/beets/config.yaml
+
+beet -c $HOME/.config/beets/config.yaml import -i -w -c $1

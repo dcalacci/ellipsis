@@ -1,3 +1,5 @@
+alias k="minikube kubectl"
+
 # Easier navigation
 alias ..="cd .."
 alias ...="cd ../.."

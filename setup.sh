@@ -44,6 +44,11 @@ if [[ $APPS =~ ^[Yy]$ && $MAC =~ ^[Nn]$ ]]; then
     sudo apt install git-lfs
 fi
 
+git lfs install
+
+# node / nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.0/install.sh | bash
+
 # GIT ---------------------------------
 echo "Installing git and git-lfs..."
 mkdir -p ~/.config/git
@@ -53,12 +58,11 @@ ln -sf $DIR/git/gitignore ~/.config/git/ignore
 
 # BASH  -----------------------------------
 echo "Setting bash settings..."
+mkdir -p ~/.config/git
 ln -sf $DIR/bash/bash_profile ~/.bash_profile
 ln -sf $DIR/bash/bashrc ~/.bashrc
 ln -sf $DIR/bash/inputrc ~/.inputrc
 
-
-git lfs install
 
 echo "Installing NVM and latest nodejs..."
 # node / nvm
@@ -114,7 +118,6 @@ ln -sf $DIR/ranger/rifle.conf ~/.config/ranger/rifle.conf
 ln -sf $DIR/ranger/scope.sh ~/.config/ranger/scope.sh
 
 
-
 # PYTHON -----------------------------------
 # ipython settings
 mkdir -p ~/.ipython/profile_default
@@ -138,10 +141,6 @@ if [[ $PYENV =~ ^[Yy]$ ]]; then
     fi
 fi
 
-echo "Installing python 3.9.1"
-# CFLAGS="-I$(brew --prefix openssl)/include" \
-# LDFLAGS="-L$(brew --prefix openssl)/lib" \
-pyenv install -v 3.9.1
 
 if [[ $DOCS =~ ^[Yy]$ ]]; then
     mkdir -p ~/.ssh
@@ -163,6 +162,13 @@ if [ ! -f /etc/environment ]; then
 fi
 
 if [[ $MAC =~ ^[Yy]$ ]]; then
+
+    echo "Installing python on Mac with linked openssl..."
+    # install python with linked openssl
+    echo "Installing python 3.9.1"
+    # CFLAGS="-I$(brew --prefix openssl)/include" \
+    # LDFLAGS="-L$(brew --prefix openssl)/lib" \
+    pyenv install -v 3.9.1
 
     # window manager for mac osx
     echo "Creating yabai and skhd dotfiles..."

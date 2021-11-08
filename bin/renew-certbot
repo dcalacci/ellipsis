@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# RUN AS SUDO
+
+certbot certonly \
+    --manual \
+    --preferred-challenges=dns \
+    --email dan@dcalacci.net \
+    --agree-tos \
+    -d *.witchy.business

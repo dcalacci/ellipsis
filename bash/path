@@ -5,6 +5,7 @@ export PATH="~/.local/bin:$PATH"
 export PATH="~/.bin:$PATH"
 export PATH="~/usr/lib/android-sdk/tools/bin:$PATH"
 export PATH="~/usr/lib/android-sdk/platform-tools:$PATH"
+export PATH="/snap/bin:$PATH"
 
 # Add /usr/local/sbin to path.
 export PATH="/usr/local/sbin:$PATH"
@@ -31,3 +32,5 @@ export PATH="/usr/local/bin:$PATH"
 
 # Add `~/.bin` to the `$PATH`
 export PATH="$HOME/.bin:$PATH"
+
+export PATH="/usr/bin:$PATH"
