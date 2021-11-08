@@ -1,3 +1,5 @@
+alias k="microk8s kubectl"
+
 # Easier navigation
 alias ..="cd .."
 alias ...="cd ../.."
