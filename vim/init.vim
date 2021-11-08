@@ -27,12 +27,19 @@ Plug 'ayu-theme/ayu-vim-airline'
 Plug 'vim-airline/vim-airline'                          " airline status bar
 Plug 'ryanoasis/vim-devicons'                           " pretty icons everywhere
 Plug 'gregsexton/MatchTag'                              " highlight matching html tags
+Plug 'scrooloose/nerdtree'
+
 "}}}
 
 " ================= Functionalities ================= "{{{
 
 " auto completion, Lang servers and stuff
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+
+" better diagnostic output 
+Plug 'kyazdani42/nvim-web-devicons'
+" Plug 'folke/trouble.nvim', {'branch': 'main'}
 
 " fuzzy stuff
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -47,30 +54,37 @@ Plug 'Yggdroot/indentLine'                              " show indentation lines
 
 " languages
 "Plug 'tpope/vim-liquid'                                 " liquid language support
-Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}  " better python
+Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
 Plug 'jparise/vim-graphql'
 
 " Interactive python
 Plug 'hdima/python-syntax'
 Plug 'jpalardy/vim-slime', { 'for': 'python' }
 Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
+
 " R and R notebooks
 Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
 Plug 'jalvesaq/Nvim-R'
 Plug 'gaalcaras/ncm-R'
+Plug 'jalvesaq/R-Vim-runtime', {'for': ['r', 'rmd']}
+Plug 'vim-pandoc/vim-pandoc-syntax',  {'for': ['rmd']}
 
 
 "Plug 'sheerun/vim-polyglot'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
  " For async completion
-Plug 'Shougo/deoplete.nvim'
+" Plug 'Shougo/deoplete.nvim'
  " For Denite features
 Plug 'Shougo/denite.nvim'
 " Typescript
 "Plug 'leafgarland/typescript-vim'
 "Plug 'peitalin/vim-jsx-typescript'
+
+" fixes some problems with typescript formatting 
+autocmd BufEnter *.{js,jsx,ts,tsx,py} :syntax sync fromstart
+autocmd BufLeave *.{js,jsx,ts,tsx,py} :syntax sync clear
 
 
 " Vim 8 only
@@ -92,7 +106,6 @@ Plug 'christoomey/vim-tmux-navigator'                   " lets you jump with h,j
 
 " other
 Plug 'tpope/vim-commentary'                             " better commenting
-Plug 'mhinz/vim-startify'                               " cool start up screen
 Plug 'tpope/vim-fugitive'                               " git support
 Plug 'psliwka/vim-smoothie'                             " some very smooth ass scrolling
 Plug 'farmergreg/vim-lastplace'                         " open files at the last edited place
@@ -107,7 +120,7 @@ call plug#end()
 "}}}
 
 " ==================== general config ======================== "{{{
-
+" set macmeta
 set termguicolors                                       " Opaque Background
 set mouse=a                                             " enable mouse scrolling
 set clipboard+=unnamedplus                              " use system clipboard by default
@@ -154,16 +167,18 @@ let g:slime_paste_file = "$HOME/.slime_paste"
 
 " Coloring
 set termguicolors     " enable true colors support
-let ayucolor="mirage"  " for light version of theme
+let ayucolor="dark"  " for light version of theme
 colorscheme ayu
-highlight Cursor guibg=#0f111a guifg=#eeeeee
-highlight iCursor guifg=#0f111a guibg=#eeeeee
-highlight Pmenu guibg='#00010a' guifg=white              " popup menu colors
-highlight Comment gui=italic cterm=italic               " bold comments
+" highlight Cursor guibg=#0f111a guifg=#eeeeee
+" highlight iCursor guifg=#0f111a guibg=#eeeeee
+" highlight Pmenu guibg='#00010a' guifg=white              " popup menu colors
+" highlight Comment guifg=#fafafa guibg=#abb0b6 gui=italic cterm=italic               " bold comments
 highlight Normal gui=none
 highlight NonText guibg=none
 highlight clear SignColumn                              " use number color for sign column color
-hi Search guibg=#b16286 guifg=#ebdbb2 gui=NONE          " search string highlight color
+" highlight rComment guifg=#fafafa guibg=#abb0b6 gui=italic cterm=italic               " bold comments
+
+" hi Search guibg=#abb0b6 guifg=#fafafa          " search string highlight color
 autocmd ColorScheme * highlight VertSplit cterm=NONE    " split color
 hi NonText guifg=bg                                     " mask ~ on empty lines
 hi clear CursorLineNr                                   " use the theme color for relative number
@@ -171,12 +186,13 @@ hi CursorLineNr gui=bold                                " make relative number b
 hi EasyMotionMoveHL guibg=#b16286 guifg=#ebdbb2 gui=NONE
 
 " colors for git (especially the gutter)
-hi DiffAdd  guibg=#eeeeee guifg=#43a047
-hi DiffChange guibg=#eeeeee guifg=#fdd835
-hi DiffRemoved guibg=#eeeeee guifg=#e53935
+" hi DiffAdd guifg=#43a047 guibg=#fafafa
+" hi DiffChange guifg=#fdd835 guibg=#fafafa
+" hi DiffRemoved guifg=#e53935 guibg=#fafafa
 
 " coc multi cursor highlight color
 hi CocCursorRange guibg=#b16286 guifg=#ebdbb2
+
 
 " performance tweaks
 set nocursorline
@@ -255,12 +271,14 @@ let g:coc_snippet_next = '<tab>'
 
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
+" notes on coc config:
+" https://thoughtbot.com/blog/modern-typescript-and-react-development-in-vim
 " list of the extensions required
 let g:coc_global_extensions = [
             \'coc-yank',
-            \'coc-pairs',
             \'coc-emmet',
             \'coc-json',
+            \'coc-eslint',
             \'coc-css',
             \'coc-html',
             \'coc-tsserver',
@@ -268,7 +286,7 @@ let g:coc_global_extensions = [
             \'coc-lists',
             \'coc-snippets',
             \'coc-ultisnips',
-            \'coc-python',
+            \'coc-pyright',
             \'coc-clangd',
             \'coc-prettier',
             \'coc-xml',
@@ -277,14 +295,10 @@ let g:coc_global_extensions = [
             \'coc-git'
             \]
 
+
 " indentLine
 let g:indentLine_char = '▏'
 let g:indentLine_color_gui = '#363949'
-
-" startify
-let g:startify_session_persistence = 1
-let g:startify_fortune_use_unicode = 1
-let g:startify_enable_special = 0
 
 " rainbow brackets
 let g:rainbow_active = 1
@@ -302,6 +316,7 @@ let g:auto_save_events = ["FocusLost"]
 " semshi settings
 let g:semshi#error_sign	= v:false                       " let ms python lsp handle this
 
+
 "" FZF
 
 " general
@@ -317,20 +332,31 @@ endif
 
 "}}}
 
-" ======================= Slime =====================================" {{{
-
+" ======================= Slime ===================================== {{{
 " use tmux for slime
 let g:slime_target = 'tmux'
-
 " fix paste issues in ipython
 let g:slime_python_ipython = 1
-
 " always send text to the top-right pane in the current tmux tab without asking
 let g:slime_default_config = {
             \ 'socket_name': get(split($TMUX, ','), 0),
             \ 'target_pane': '{top-right}' }
 let g:slime_dont_ask_default = 1
 "}}}
+
+" Radian integration with NVim-R {{{
+let R_app = "radian"
+let R_cmd = "R"
+let R_hl_term = 0
+let R_args = []
+let R_bracketed_paste = 1
+let R_in_buffer = 0
+
+" formatting when leaving insert mode 
+ " augroup myformatting
+ "     autocmd!
+ "     autocmd InsertLeave * normal gwap<CR>
+ " augroup END
 
 " ======================== Auto Commands ============================= "{{{
 
@@ -341,14 +367,7 @@ autocmd BufEnter * if index(spellable, &ft) < 0 | set nospell | else | set spell
 " open help in vertical split
 autocmd FileType help wincmd L
 
-" startify when there is no open buffer left
-autocmd BufDelete * if empty(filter(tabpagebuflist(), '!buflisted(v:val)')) | Startify | endif
-
-" open startify on start
-autocmd VimEnter * if argc() == 0 | Startify | endif
-
 " open files preview on enter and provided arg is a folder
-autocmd VimEnter * if argc() != 0 && isdirectory(argv()[0]) | Startify | endif
 autocmd VimEnter * if argc() != 0 && isdirectory(argv()[0]) | execute 'cd' fnameescape(argv()[0])  | endif
 autocmd VimEnter * if argc() != 0 && isdirectory(argv()[0]) | Files | endif
 
@@ -368,6 +387,13 @@ augroup END
 "}}}
 
 " ================== Custom Functions ===================== "{{{
+
+" Formatting selected code.
+" xmap <leader>f  <Plug>(coc-format-selected)
+" nmap <leader>f  <Plug>(coc-format-selected)
+
+" Setup formatexpr specified filetype(s).
+autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
@@ -439,7 +465,6 @@ let g:vista_sidebar_width = 30
 let mapleader=","
 nnoremap ; :
 nmap \ <leader>q
-map <F6> :Startify <CR>
 map <F4> :Vista!!<CR>
 nmap <leader>r :so ~/.config/nvim/init.vim<CR>
 nmap <leader>q :bd<CR>
@@ -456,6 +481,9 @@ nmap <S-Tab> :bprevious<CR>
 noremap <leader>e :PlugInstall<CR>
 noremap <C-q> :q<CR>
 inoremap jj <ESC>
+
+nnoremap <silent> <C-t> :NERDTreeToggle<CR>
+nnoremap <leader>t :NERDTreeFocus<CR>
 
 "" <alt> + XX will do single motions in insert mode
 inoremap <A-h> <C-o>h
@@ -494,49 +522,55 @@ nnoremap <silent>vv :ls<cr>:vsp<space>\|<space>b<space>
 nnoremap <silent>ss :ls<cr>:sp<space>\|<space>b<space>
 "" slime mappings
 
+"-----------------
+" R config
+"-----------------
+let R_assign = 0
+let Rout_more_colors = 1
+
 "------------------------------------------------------------------------------
 " ipython-cell configuration
 "------------------------------------------------------------------------------
 
-" map <Leader>s to start IPython
+" " map <Leader>s to start IPython
 nnoremap <Leader>s :SlimeSend1 ipython --matplotlib<CR>
 
-" map <Leader>r to run script
-nnoremap <Leader>R :IPythonCellRun<CR>
+" " map <Leader>r to run script
+" nnoremap <Leader>R :IPythonCellRun<CR>
 
-" map <Leader>R to run script and time the execution
-" nnoremap <Leader>R :IPythonCellRunTime<CR>
+" " map <Leader>R to run script and time the execution
+" " nnoremap <Leader>R :IPythonCellRunTime<CR>
 
-" map <Leader>c to execute the current cell
-nnoremap <Leader>C :IPythonCellExecuteCell<CR>
+" " map <Leader>c to execute the current cell
+" nnoremap <Leader>C :IPythonCellExecuteCell<CR>
 
-" map <Leader>C to execute the current cell and jump to the next cell
-" nnoremap <Leader>C :IPythonCellExecuteCellJump<CR>
+" " map <Leader>C to execute the current cell and jump to the next cell
+" " nnoremap <Leader>C :IPythonCellExecuteCellJump<CR>
 
-" map <Leader>l to clear IPython screen
-nnoremap <Leader>L :IPythonCellClear<CR>
+" " map <Leader>l to clear IPython screen
+" nnoremap <Leader>L :IPythonCellClear<CR>
 
-" map <Leader>x to close all Matplotlib figure windows
-nnoremap <Leader>x :IPythonCellClose<CR>
+" " map <Leader>x to close all Matplotlib figure windows
+" nnoremap <Leader>x :IPythonCellClose<CR>
 
-" map [c and ]c to jump to the previous and next cell header
-nnoremap [c :IPythonCellPrevCell<CR>
-nnoremap ]c :IPythonCellNextCell<CR>
+" " map [c and ]c to jump to the previous and next cell header
+" nnoremap [c :IPythonCellPrevCell<CR>
+" nnoremap ]c :IPythonCellNextCell<CR>
 
-" map <Leader>h to send the current line or current selection to IPython
+" " map <Leader>h to send the current line or current selection to IPython
 nmap <Leader>h <Plug>SlimeLineSend
 xmap <Leader>h <Plug>SlimeRegionSend
 
-" map <Leader>p to run the previous command
-nnoremap <Leader>p :IPythonCellPrevCommand<CR>
+" " map <Leader>p to run the previous command
+" nnoremap <Leader>p :IPythonCellPrevCommand<CR>
 
-" map <Leader>Q to restart ipython
-nnoremap <Leader>Q :IPythonCellRestart<CR>
+" " map <Leader>Q to restart ipython
+" nnoremap <Leader>Q :IPythonCellRestart<CR>
 
-" map <Leader>d to start debug mode
-nnoremap <Leader>d :SlimeSend1 %debug<CR>
+" " map <Leader>d to start debug mode
+" nnoremap <Leader>d :SlimeSend1 %debug<CR>
 
-" map <Leader>q to exit debug mode or IPython
+" " map <Leader>q to exit debug mode or IPython
 nnoremap <Leader>q :SlimeSend1 exit<CR>
 
 "" coc mappings
@@ -548,6 +582,9 @@ xmap <silent> <C-a> <Plug>(coc-cursors-range)
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" do something about the diagnostic if you can
+nmap <leader>do <Plug>(coc-codeaction)
 
 " for global rename
 nmap <leader>rn <Plug>(coc-rename)
@@ -561,8 +598,24 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+
+" showing documentation / diagnostics
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 nnoremap <buffer> H :<C-u>execute "!pydoc3 " . expand("<cword>")<CR>
+
+" show diagnostic if it exists, otherwise documentation
+" function! ShowDocIfNoDiagnostic(timer_id)
+"   if (coc#float#has_float() == 0)
+"     silent call CocActionAsync('doHover')
+"   endif
+" endfunction
+
+" function! s:show_hover_doc()
+"   call timer_start(500, 'ShowDocIfNoDiagnostic')
+" endfunction
+
+" autocmd CursorHoldI * :call <SID>show_hover_doc()
+" autocmd CursorHold * :call <SID>show_hover_doc()
 
 
 "" easy motion stuff
