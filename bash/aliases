@@ -1,4 +1,4 @@
-alias k="microk8s kubectl"
+alias k="minikube kubectl"
 
 # Easier navigation
 alias ..="cd .."
