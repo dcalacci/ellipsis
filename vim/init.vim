@@ -571,7 +571,7 @@ xmap <Leader>h <Plug>SlimeRegionSend
 " nnoremap <Leader>d :SlimeSend1 %debug<CR>
 
 " " map <Leader>q to exit debug mode or IPython
-nnoremap <Leader>q :SlimeSend1 exit<CR>
+nnoremap <Leader>sq :SlimeSend1 exit<CR>
 
 "" coc mappings
 " multi cursor shortcuts
