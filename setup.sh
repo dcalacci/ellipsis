@@ -107,10 +107,10 @@ fi
 if [[ $DOCS =~ ^[Yy]$ ]]; then
     mkdir -p ~/.ssh
     ln -sf ~/docs/ssh/config ~/.ssh/config
-    ln -sf ~/docs/keys/id_rsa.pub ~/.ssh/id_rsa.pub
-    ln -sf ~/docs/keys/id_rsa ~/.ssh/id_rsa
-    ln -sf ~/docs/keys/mailbox ~/.ssh/mailbox
-    ln -sf ~/docs/keys/mailbox.pub ~/.ssh/mailbox.pub
+    ln -shf ~/docs/keys/id_rsa.pub ~/.ssh/id_rsa.pub
+    ln -shf ~/docs/keys/id_rsa ~/.ssh/id_rsa
+    ln -shf ~/docs/keys/mailbox ~/.ssh/mailbox
+    ln -shf ~/docs/keys/mailbox.pub ~/.ssh/mailbox.pub
 fi
 
 if [ ! -f /etc/environment ]; then
@@ -120,7 +120,6 @@ if [ ! -f /etc/environment ]; then
 fi
 
 if [[ $MAC =~ ^[Yy]$ ]]; then
-
     # window manager for mac osx
     echo "Creating yabai and skhd dotfiles..."
     ln -sf $DIR/wm/yabairc ~/.yabairc
