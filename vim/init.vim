@@ -82,9 +82,8 @@ Plug 'vim-pandoc/vim-pandoc-syntax',  {'for': ['rmd', 'md']}
 
 "Plug 'sheerun/vim-polyglot'
 Plug 'HerringtonDarkholme/yats.vim'
-Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+Plug 'mhartington/nvim-typescript', {'for': ['typescript', 'tsx'], 'do': './install.sh' }
 " For async completion
-" Plug 'Shougo/deoplete.nvim'
 " For Denite features
 Plug 'Shougo/denite.nvim'
 " Typescript
@@ -134,6 +133,7 @@ call plug#end()
 
 " ==================== general config ======================== "{{{
 " set macmeta
+set nowrap                                              " No line wrap by default
 set termguicolors                                       " Opaque Background
 set mouse=a                                             " enable mouse scrolling
 set clipboard+=unnamedplus                              " use system clipboard by default
@@ -145,7 +145,7 @@ set fillchars+=vert:\▏                                  " requires a patched n
 let &showbreak = '↳'
 set cpo=n
 set linebreak
-set wrap "breakindent                                    " wrap long lines to the width set by tw
+" set wrap "breakindent                                    " wrap long lines to the width set by tw
 set encoding=utf-8                                      " text encoding
 " set number                                              " enable numbers on the left
 set relativenumber                                      " current line is 0
@@ -154,7 +154,7 @@ set noshowmode                                          " dont show current mode
 set conceallevel=2                                      " set this so we wont break indentation plugin
 set splitright                                          " open vertical split to the right
 set splitbelow                                          " open horizontal split to the bottom
-set tw=100                                               " auto wrap lines that are longer than that
+" set tw=100                                               " auto wrap lines that are longer than that
 set emoji                                               " enable emojis
 let g:indentLine_setConceal = 0                         " actually fix the annoying markdown links conversion
 au BufEnter * set fo-=c fo-=r fo-=o                     " stop annoying auto commenting on new lines
@@ -334,6 +334,7 @@ let g:coc_global_extensions = [
             \'coc-clangd',
             \'coc-prettier',
             \'coc-xml',
+            \'coc-rls',
             \'coc-syntax',
             \'coc-flutter',
             \'coc-git'
@@ -571,6 +572,7 @@ nnoremap <silent> vv <C-w>v
 nnoremap <silent>vv :ls<cr>:vsp<space>\|<space>b<space>
 nnoremap <silent>ss :ls<cr>:sp<space>\|<space>b<space>
 "" slime mappings
+
 
 "-----------------
 " R config
