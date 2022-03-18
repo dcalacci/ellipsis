@@ -50,7 +50,7 @@
   },
 
   // diagnostic settings
-  "diagnostic.displayByAle": false,
+  "diagnostic.displayByAle": true,
   "diagnostic.refreshOnInsertMode": true,
   "diagnostic.signOffset": 999999,
   "diagnostic.errorSign": "✘",
@@ -64,6 +64,7 @@
   "diagnostic.virtualText": true,
   "diagnostic.locationlist": true,
   "diagnostic.enableMessage": "never",
+  "diagnostic.locationlistUpdate": true,
 
   // list settings
   "list.source.grep.command": "rg",

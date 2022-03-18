@@ -5,6 +5,11 @@ let vimplug_exists=expand('~/.config/nvim/autoload/plug.vim')
 let g:vim_bootstrap_langs = "python,javascript,R"
 let g:vim_bootstrap_editor = "nvim"				" Nvim or Vim
 
+" incorporate ALE w CoC
+" https://github.com/dense-analysis/ale#faq-coc-nvim
+let g:ale_disable_lsp = 1
+
+
 if !filereadable(vimplug_exists)
   if !executable("curl")
     echoerr "You have to install curl or first install vim-plug yourself!"
@@ -28,6 +33,8 @@ Plug 'vim-airline/vim-airline'                          " airline status bar
 Plug 'ryanoasis/vim-devicons'                           " pretty icons everywhere
 Plug 'gregsexton/MatchTag'                              " highlight matching html tags
 Plug 'scrooloose/nerdtree'
+Plug 'Shougo/ddc.vim'
+Plug 'vim-denops/denops.vim'
 
 "}}}
 
@@ -39,14 +46,15 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " better diagnostic output 
 Plug 'kyazdani42/nvim-web-devicons'
-" Plug 'folke/trouble.nvim', {'branch': 'main'}
+Plug 'arafatamim/trouble.nvim'
+Plug 'folke/lsp-colors.nvim'
 
 " fuzzy stuff
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 " snippets
-Plug 'SirVer/ultisnips'
+" Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'                               " actual snippets
 
 " visual
@@ -106,8 +114,8 @@ endif
 
 " Optional: for snippet support
 " Further configuration might be required, read below
-Plug 'sirver/UltiSnips'
-Plug 'ncm2/ncm2-ultisnips'
+" Plug 'sirver/UltiSnips'
+" Plug 'ncm2/ncm2-ultisnips'
 
 " Optional: better Rnoweb support (LaTeX completion)
 Plug 'lervag/vimtex'
@@ -329,7 +337,6 @@ let g:coc_global_extensions = [
             \'coc-yaml',
             \'coc-lists',
             \'coc-snippets',
-            \'coc-ultisnips',
             \'coc-pyright',
             \'coc-clangd',
             \'coc-prettier',
@@ -655,7 +662,7 @@ nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 nnoremap <buffer> H :<C-u>execute "!pydoc3 " . expand("<cword>")<CR>
 
-" show diagnostic if it exists, otherwise documentation
+" " show diagnostic if it exists, otherwise documentation
 " function! ShowDocIfNoDiagnostic(timer_id)
 "   if (coc#float#has_float() == 0)
 "     silent call CocActionAsync('doHover')
@@ -668,6 +675,59 @@ nnoremap <buffer> H :<C-u>execute "!pydoc3 " . expand("<cword>")<CR>
 
 " autocmd CursorHoldI * :call <SID>show_hover_doc()
 " autocmd CursorHold * :call <SID>show_hover_doc()
+
+" Vim Script
+" nnoremap <leader>xx <cmd>TroubleToggle<cr>
+" nnoremap <leader>xw <cmd>TroubleToggle workspace_diagnostics<cr>
+" nnoremap <leader>xd <cmd>TroubleToggle document_diagnostics<cr>
+" nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
+" nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
+nmap <silent> xx <cmd>call coc#rpc#request('fillDiagnostics', [bufnr('%')])<CR><cmd>Trouble loclist<CR>`
+nmap <silent> xw <cmd>call coc#rpc#request('fillDiagnostics', [bufnr('%')])<CR><cmd>TroubleToggle workspace_diagnostics<CR>`
+nmap <silent> xd <cmd>call coc#rpc#request('fillDiagnostics', [bufnr('%')])<CR><cmd>TroubleToggle document_diagnostics<CR>`
+nmap <silent> xq <cmd>call coc#rpc#request('fillDiagnostics', [bufnr('%')])<CR><cmd>TroubleToggle quickfix<CR>`
+
+
+" Doagnostics with Trouble
+lua << EOF
+require("trouble").setup {
+    height = 10, -- height of the trouble list
+    icons = true, -- use devicons for filenames
+    mode = "document_diagnostics", -- "lsp_workspace_diagnostics", "lsp_document_diagnostics", "quickfix", "lsp_references", "loclist"
+    fold_open = "", -- icon used for open folds
+    fold_closed = "", -- icon used for closed folds
+    action_keys = { -- key mappings for actions in the trouble list
+        close = "q", -- close the list
+        cancel = "<esc>", -- cancel the preview and get back to your last window / buffer / cursor
+        refresh = "r", -- manually refresh
+        jump = {"<cr>", "<tab>"}, -- jump to the diagnostic or open / close folds
+        jump_close = {"o"}, -- jump to the diagnostic and close the list
+        toggle_mode = "m", -- toggle between "workspace" and "document" diagnostics mode
+        toggle_preview = "P", -- toggle auto_preview
+        hover = "K", -- opens a small poup with the full multiline message
+        preview = "p", -- preview the diagnostic location
+        close_folds = {"zM", "zm"}, -- close all folds
+        open_folds = {"zR", "zr"}, -- open all folds
+        toggle_fold = {"zA", "za"}, -- toggle fold of current file
+        previous = "k", -- preview item
+        next = "j" -- next item
+    },
+    indent_lines = true, -- add an indent guide below the fold icons
+    auto_open = false, -- automatically open the list when you have diagnostics
+    auto_close = false, -- automatically close the list when you have no diagnostics
+    auto_preview = true, -- automatyically preview the location of the diagnostic. <esc> to close preview and go back to last window
+    auto_fold = false, -- automatically fold a file trouble list at creation
+    signs = {
+        -- icons / text used for a diagnostic
+        error = "",
+        warning = "",
+        hint = "",
+        information = "",
+        other = "﫠"
+    },
+    use_lsp_diagnostic_signs = false -- enabling this will use the signs defined in your lsp client
+}
+EOF
 
 
 "" easy motion stuff

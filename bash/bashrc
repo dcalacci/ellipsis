@@ -48,5 +48,7 @@ else
     fi
 fi
 unset __conda_setup
+
+nvm use stable
 # <<< conda initialize <<<
 
