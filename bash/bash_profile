@@ -60,3 +60,5 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 
 [[ -r ~/.bashrc ]] && . ~/.bashrc
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
+
+. "$HOME/.cargo/env"

@@ -1,5 +1,4 @@
 # Initialize fzf
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 export FZF_CTRL_T_COMMAND="fd . $HOME"
 export FZF_ALT_C_COMMAND="fd -t d . $HOME"
 export FZF_DEFAULT_COMMAND='rg --files --follow --glob "!.git/*"'
@@ -31,24 +30,13 @@ alias node='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && node'
 alias npm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && npm'
 
 
-source <(minikube kubectl completion bash)
-alias k="minikube kubectl"
-complete -F __start_kubectl k
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export ANDROID_SDK_ROOT=$HOME/Library/Android/sdk
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/opt/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/opt/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/opt/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
+# sdkman
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+. "$HOME/.cargo/env"
 
-nvm use stable
-# <<< conda initialize <<<
+# nvm use stable
 
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

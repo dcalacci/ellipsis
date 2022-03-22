@@ -78,7 +78,7 @@
 
 # open terminal, kitty
 cmd - return : /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~
-shift + cmd - m : open /Applications/Hey.app
+# shift + cmd - m : open /Applications/Hey.app
 shift + cmd - o : open /Applications/Obsidian.app
 
 # restart yabai and skhd with cmd + r
@@ -101,8 +101,11 @@ ctrl + alt - l : yabai -m window --swap east
 ctrl + cmd - r : yabai -m space --rotate 90
 
 # move spaces
-ctrl + shift - h : yabai -m space --move prev
-ctrl + shift - l : yabai -m space --move next
+ctrl + cmd + shift - h : yabai -m space --move prev
+ctrl + cmd + shift - l : yabai -m space --move next
+
+# auto-balance
+shift + alt - c : if [ $(yabai -m config auto_balance) = "on" ]; then; yabai -m config auto_balance off; else; yabai -m config auto_balance on; fi
 
 # balance size of windows
 shift + alt - 0 : yabai -m space --balance

@@ -42,6 +42,7 @@ Plug 'vim-denops/denops.vim'
 
 " auto completion, Lang servers and stuff
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" dependencies
 
 
 " better diagnostic output 
@@ -88,7 +89,7 @@ Plug 'gaalcaras/ncm-R'
 Plug 'jalvesaq/R-Vim-runtime', {'for': ['r', 'rmd']}
 Plug 'vim-pandoc/vim-pandoc-syntax',  {'for': ['rmd', 'md']}
 
-"Plug 'sheerun/vim-polyglot'
+" Modern Web
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'mhartington/nvim-typescript', {'for': ['typescript', 'tsx'], 'do': './install.sh' }
 " For async completion
@@ -121,7 +122,6 @@ endif
 Plug 'lervag/vimtex'
 
 " Tmux integration
-"Plug 'wellle/tmux-complete.vim'                         " complete words from a tmux panes (I found this annoying)
 Plug 'christoomey/vim-tmux-navigator'                   " lets you jump with h,j,k,l into tmux panes
 
 " other
@@ -338,6 +338,7 @@ let g:coc_global_extensions = [
             \'coc-lists',
             \'coc-snippets',
             \'coc-pyright',
+            \'coc-rls',
             \'coc-clangd',
             \'coc-prettier',
             \'coc-xml',
@@ -748,5 +749,13 @@ map <leader>d :Gdiffsplit<CR>
 
 " disable hl with 2 esc
 noremap <silent><esc> <esc>:noh<CR><esc>
+
+" fixing a weird error where open parens, brackets, quotes do not show
+imap ( (
+imap { {
+imap " "
+imap [ [
+imap < <
+
 
 "}}}

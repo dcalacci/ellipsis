@@ -63,7 +63,6 @@ ln -sf $DIR/bash/bash_profile ~/.bash_profile
 ln -sf $DIR/bash/bashrc ~/.bashrc
 ln -sf $DIR/bash/inputrc ~/.inputrc
 
-
 echo "Installing NVM and latest nodejs..."
 # node / nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.0/install.sh | bash
@@ -75,6 +74,14 @@ export NVM_DIR="$HOME/.nvm"
 nvm install stable
 
 npm install -g yarn expo-cli
+
+# ZSH
+echo "Installing oh-my-zsh and oh-my-git..."
+ln -sf $DIR/zsh ~/.zsh
+ln -sf $DIR/zshrc ~/.zshrc
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+sh -c "$(curl -fsSL https://git.io/zinit-install)"
+git clone https://github.com/arialdomartini/oh-my-git.git ~/.oh-my-git && echo source ~/.oh-my-git/prompt.sh >> ~/.profile
 
 # TMUX --------------------
 ln -sf $DIR/tmux/tmux.conf ~/.tmux.conf
@@ -107,7 +114,9 @@ ln -sf $DIR/kitty/kitty.conf ~/.config/kitty/kitty.conf
 ## TOOLS -----------------------------
 # fzf
 echo "Installing fzf..."
-echo "Say NO to auto-completion for performance"
+# echo "Say NO to auto-completion for performance"
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/src/fzf
+~/src/fzf/install
 #git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 #~/.fzf/install
 
