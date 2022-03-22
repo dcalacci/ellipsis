@@ -13,8 +13,7 @@ export PATH="$HOME/.npm-packages/bin:$PATH"                   # (node installer)
 # export PATH="$HOME/.yarn/bin:$PATH"                           # <-- yarn (node)
 export PATH="$HOME/go/bin:$PATH"                              # <-- go
 export PATH="$HOME/.local/bin:$PATH"                          # <-- local/bin
-source "$HOME/opt/anaconda3/etc/profile.d/conda.sh"
-[[ -z $TMUX ]] || conda deactivate; conda activate base       #   + TMUX fix
+# source "$HOME/opt/anaconda3/etc/profile.d/conda.sh"  # commented out by conda initialize
 export PATH="~/bin:$PATH"                                  # <-- personal stuff
 export PATH="/opt/local/bin:/opt/local/sbin:$PATH"            # <-- MacPorts
 export PATH="/opt/local/libexec/gnubin:$PATH"                 # <-- Coreutils
@@ -179,6 +178,25 @@ export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# conda
+
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/dcalacci/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/dcalacci/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/dcalacci/opt/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/dcalacci/opt/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+[[ -z $TMUX ]] || conda deactivate; conda activate base       #   + TMUX fix
 # }}}
 
 # Functions {{{
@@ -263,3 +281,14 @@ zinit light-mode for \
     zdharma-continuum/zinit-annex-rust
 
 ### End of Zinit's installer chunk
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust
+
+### End of Zinit's installer chunk
+

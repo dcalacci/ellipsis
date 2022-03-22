@@ -108,8 +108,9 @@ rm -rf ~/.vim
 
 
 ## KITTY --------------
-mkdir -p ~/.config/kitty
-ln -sf $DIR/kitty/kitty.conf ~/.config/kitty/kitty.conf
+# mkdir -p ~/.config/kitty
+# ln -sf $DIR/kitty/kitty.conf ~/.config/kitty/kitty.conf
+ln -sf $DIR/kitty ~/.config/kitty
 
 ## TOOLS -----------------------------
 # fzf
