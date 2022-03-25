@@ -162,6 +162,9 @@ lvim.plugins = {
     },
     ft = {"fugitive"}
   },
+  {"maxmellon/vim-jsx-pretty"},
+  {"HerringtonDarkholme/yats.vim"}
+
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
