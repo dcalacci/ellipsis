@@ -36,9 +36,10 @@ if [[ $APPS =~ ^[Yy]$ && $MAC =~ ^[Yy]$ ]]; then
 
     brew install --cask ngrok android-studio osxfuse keybase mactex-no-gui postgres r rstudio sketch slack visual-studio-code vlc xquartz gqrx firefox chromium docker kitty zotero slack zoom discord obsidian arduino android-studio android-sdk figma
     brew install ncdu stunnel pyenv wget git-lfs neovim fzf
-    brew install koekeishiya/formulae/skhd
-    brew install koekeishiya/formulae/yabai
+    brew tap homebrew/cask-fonts
+    brew install font-fira-code
 fi
+
 
 if [[ $APPS =~ ^[Yy]$ && $MAC =~ ^[Nn]$ ]]; then
     sudo apt install git-lfs
@@ -90,10 +91,10 @@ ln -sf $DIR/tmux/tmux.conf ~/.tmux.conf
 ln -sf $DIR/bin ~/.bin
 
 # VIM ----------------------------------
-echo "Linking NeoVim config..."
-mkdir -p ~/.config/nvim
-ln -sf $DIR/vim/init.vim ~/.config/nvim/init.vim
-ln -sf $DIR/vim/coc-settings.json ~/.config/nvim/coc-settings.json
+# echo "Linking NeoVim config..."
+# mkdir -p ~/.config/nvim
+# ln -sf $DIR/vim/init.vim ~/.config/nvim/init.vim
+# ln -sf $DIR/vim/coc-settings.json ~/.config/nvim/coc-settings.json
 
 # overwrite vi executables
 #sudo rm /usr/bin/vi
@@ -101,7 +102,7 @@ ln -sf $DIR/vim/coc-settings.json ~/.config/nvim/coc-settings.json
 #sudo ln -s /usr/local/bin/nvim /usr/bin/vi
 #sudo ln -s /usr/local/bin/nvim /usr/bin/vim
 
-rm -rf ~/.vim
+# rm -rf ~/.vim
 ## TODO: install minpac? pathogen?
 # push w/o logging in
 #ssh -vT git@github.com
@@ -122,10 +123,10 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/src/fzf
 #~/.fzf/install
 
 # ranger
-mkdir -p ~/.config/ranger
-ln -sf $DIR/ranger/rc.conf ~/.config/ranger/rc.conf
-ln -sf $DIR/ranger/rifle.conf ~/.config/ranger/rifle.conf
-ln -sf $DIR/ranger/scope.sh ~/.config/ranger/scope.sh
+# mkdir -p ~/.config/ranger
+# ln -sf $DIR/ranger/rc.conf ~/.config/ranger/rc.conf
+# ln -sf $DIR/ranger/rifle.conf ~/.config/ranger/rifle.conf
+# ln -sf $DIR/ranger/scope.sh ~/.config/ranger/scope.sh
 
 
 # PYTHON -----------------------------------
@@ -135,21 +136,21 @@ ln -sf $DIR/python/ipython_config.py ~/.ipython/profile_default/ipython_config.p
 
 # pyvenv
 
-read -rep "Do you want to reinstall and remove all pyenvs? (y/n) " -n 1
-PYENV=$REPLY
-if [[ $PYENV =~ ^[Yy]$ ]]; then
-    rm -rf ~/.pyenv
-    git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-    git clone https://github.com/pyenv/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
-    # activate pyenv
-    export PYENV_ROOT="$HOME/.pyenv"
-    export PATH="$PYENV_ROOT/bin:$PATH"
-    export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-    if command -v pyenv 1>/dev/null 2>&1; then
-      eval "$(pyenv init -)"
-      eval "$(pyenv virtualenv-init -)"
-    fi
-fi
+# read -rep "Do you want to reinstall and remove all pyenvs? (y/n) " -n 1
+# PYENV=$REPLY
+# if [[ $PYENV =~ ^[Yy]$ ]]; then
+#     rm -rf ~/.pyenv
+#     git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+#     git clone https://github.com/pyenv/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
+#     # activate pyenv
+#     export PYENV_ROOT="$HOME/.pyenv"
+#     export PATH="$PYENV_ROOT/bin:$PATH"
+#     export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+#     if command -v pyenv 1>/dev/null 2>&1; then
+#       eval "$(pyenv init -)"
+#       eval "$(pyenv virtualenv-init -)"
+#     fi
+# fi
 
 
 if [[ $DOCS =~ ^[Yy]$ ]]; then
@@ -171,23 +172,13 @@ if [ ! -f /etc/environment ]; then
     sudo touch /etc/environment
 fi
 
-if [[ $MAC =~ ^[Yy]$ ]]; then
+# if [[ $MAC =~ ^[Yy]$ ]]; then
 
-    echo "Installing python on Mac with linked openssl..."
-    # install python with linked openssl
-    echo "Installing python 3.9.1"
-    # CFLAGS="-I$(brew --prefix openssl)/include" \
-    # LDFLAGS="-L$(brew --prefix openssl)/lib" \
-    pyenv install -v 3.9.1
+#     echo "Installing python on Mac with linked openssl..."
+#     # install python with linked openssl
+#     echo "Installing python 3.9.1"
+#     # CFLAGS="-I$(brew --prefix openssl)/include" \
+#     # LDFLAGS="-L$(brew --prefix openssl)/lib" \
+#     pyenv install -v 3.9.1
 
-    # window manager for mac osx
-    echo "Creating yabai and skhd dotfiles..."
-    ln -sf $DIR/wm/yabairc ~/.yabairc
-    ln -sf $DIR/wm/skhdrc ~/.skhdrc
-
-    # change shell to bash
-    chsh -s /bin/bash
-
-    brew services start skhd 
-    brew services start yabai
-fi
+# fi
