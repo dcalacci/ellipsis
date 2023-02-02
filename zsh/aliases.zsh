@@ -128,6 +128,8 @@ for ft in $_image_fts; do alias -s $ft=$OPENER; done
 _media_fts=(ape avi flv m4a mkv mov mp3 mpeg mpg ogg ogm rm wav webm)
 for ft in $_media_fts; do alias -s $ft=$OPENER; done
 
+alias m4b-tool='docker run -it --rm -u $(id -u):$(id -g) -v "$(pwd)":/mnt sandreas/m4b-tool:latest'
+
 #read documents
 alias -s pdf=$OPENER
 alias -s ps=gv

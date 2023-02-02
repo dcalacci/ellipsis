@@ -27,6 +27,10 @@ export CUDA_HOME="/usr/local/cuda"
 export PATH="$HOME/Library/Android/sdk/platform-tools/:$PATH"
 export PATH="$HOME/Library/Android/sdk/tools/bin/:$PATH"
 
+export PATH="$PATH:$HOME/src/flutter/bin"
+
+export PATH="/opt/homebrew/bin:$PATH"
+
 
 
 # source "$HOME/venvs/base/bin/activate"                       	# <-- Activate the Python
@@ -167,6 +171,7 @@ export LESS=-R
 # /Library/Developer/CommandLineTools
 # e.g.: xcode-select --switch /Library/Developer/CommandLineTools
 
+
 # ssh
 export SSH_KEY_PATH="$HOME/.ssh/rsa_id"
 
@@ -183,20 +188,29 @@ export NVM_DIR="$HOME/.config/nvm"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/dcalacci/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/usr/local/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/Users/dcalacci/opt/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/dcalacci/opt/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "/usr/local/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/usr/local/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/Users/dcalacci/opt/anaconda3/bin:$PATH"
+        export PATH="/usr/local/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
 
 [[ -z $TMUX ]] || conda deactivate; conda activate base       #   + TMUX fix
+
+# Johnny Decimal
+autoload -Uz compinit
+compinit
+export JOHNNYDECIMAL_BASE="/Users/dcalacci/google-drive"
+source ~/src/zsh-johnnydecimal/johnnydecimal.zsh
+
+
+
 # }}}
 
 # Functions {{{
@@ -292,3 +306,8 @@ zinit light-mode for \
 
 ### End of Zinit's installer chunk
 
+
+# pnpm
+export PNPM_HOME="/Users/dcalacci/Library/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end

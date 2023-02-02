@@ -34,7 +34,9 @@ fi
 # CASKS & APPS -------------------------------
 if [[ $APPS =~ ^[Yy]$ && $MAC =~ ^[Yy]$ ]]; then
 
-    brew install --cask ngrok android-studio osxfuse keybase mactex-no-gui postgres r rstudio sketch slack visual-studio-code vlc xquartz gqrx firefox chromium docker kitty zotero slack zoom discord obsidian arduino android-studio android-sdk figma
+
+    brew install --cask ngrok android-studio keybase mactex-no-gui r rstudio sketch slack visual-studio-code vlc xquartz gqrx firefox chromium docker kitty zotero slack zoom discord obsidian arduino android-studio android-sdk figma
+    # osxfuse postgres
     brew install ncdu stunnel pyenv wget git-lfs neovim fzf
     brew tap homebrew/cask-fonts
     brew install font-fira-code
