@@ -44,7 +44,7 @@ fi
 
 
 if [[ $APPS =~ ^[Yy]$ && $MAC =~ ^[Nn]$ ]]; then
-    sudo apt install git-lfs
+    sudo apt install git-lfs zsh neovim tmux fzf ncdu stunnel4
 fi
 
 git lfs install
@@ -95,6 +95,7 @@ ln -sf $DIR/bin ~/.bin
 # VIM ----------------------------------
 # echo "Linking NeoVim config..."
 # mkdir -p ~/.config/nvim
+LV_BRANCH='release-1.2/neovim-0.8' bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/fc6873809934917b470bff1b072171879899a36b/utils/installer/install.sh)
 # ln -sf $DIR/vim/init.vim ~/.config/nvim/init.vim
 # ln -sf $DIR/vim/coc-settings.json ~/.config/nvim/coc-settings.json
 
