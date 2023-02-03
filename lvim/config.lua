@@ -28,7 +28,7 @@ vim.g.R_pdfviewer = "open"
 vim.g.R_objbr_opendf = 0
 -- vim.g.R_external_term = "IronFocus"
 vim.g.jupytext_fmt = 'Rmd'
-vim.cmd [[ let g:jupytext_filetype_map = {'Rmd': 'rmd'}]]
+-- vim.cmd [[ let g:jupytext_filetype_map = {'Rmd': 'rmd'}]]
 
 
 -- Copilot
@@ -149,11 +149,11 @@ lvim.builtin.which_key.mappings["&"] = { "<cmd>Goyo<CR>", "Goyo Mode" }
 
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
-lvim.builtin.dashboard.active = false
-lvim.builtin.notify.active = true
+-- lvim.builtin.dashboard.active = false
+-- lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
-lvim.builtin.nvimtree.show_icons.git = 0
+-- lvim.builtin.nvimtree.show_icons.git = 0
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
@@ -193,14 +193,14 @@ require 'lspconfig'.r_language_server.setup {}
 
 -- -- you can set a custom on_attach function that will be used for all the language servers
 -- -- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
-lvim.lsp.on_attach_callback = function(client, bufnr)
-  --   local function buf_set_option(...)
-  --     vim.api.nvim_buf_set_option(bufnr, ...)
-  --   end
-  --   --Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
-  -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-end
+-- lvim.lsp.on_attach_callback = function(client, bufnr)
+--   local function buf_set_option(...)
+--     vim.api.nvim_buf_set_option(bufnr, ...)
+--   end
+--   --Enable completion triggered by <c-x><c-o>
+-- vim.api.nvim_buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
+-- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+-- end
 
 
 lvim.lsp.on_attach_callback = function(client, bufnr)
@@ -260,8 +260,8 @@ lvim.plugins = {
   {
     'jalvesaq/Nvim-R',
     config = function()
-      vim.cmd("let R_assign = 0")
-      vim.cmd("let R_nvim_wd = 1")
+      -- vim.cmd("let R_assign = 0")
+      -- vim.cmd("let R_nvim_wd = 1")
       vim.cmd("let R_csv_app = 'terminal:vd'")
     end,
   },
