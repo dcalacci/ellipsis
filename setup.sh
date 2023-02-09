@@ -44,7 +44,7 @@ fi
 
 
 if [[ $APPS =~ ^[Yy]$ && $MAC =~ ^[Nn]$ ]]; then
-    sudo apt install git-lfs zsh tmux fzf ncdu stunnel4
+    sudo apt install git-lfs zsh tmux fzf ncdu stunnel4 build-essential
     #sudo snap install nvim  --classic
 fi
 
@@ -90,9 +90,6 @@ echo "Installing lunarvim requirements..."
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 #export PATH="$HOME/.cargo/bin:$PATH"
 source "$HOME/.cargo/env"
-
-# 2. build tools
-sudo apt install -y build-essential
 
 # 3. Neovim
 bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/rolling/utils/installer/install-neovim-from-release)
