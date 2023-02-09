@@ -37,20 +37,19 @@ if [[ $APPS =~ ^[Yy]$ && $MAC =~ ^[Yy]$ ]]; then
 
     brew install --cask ngrok android-studio keybase mactex-no-gui r rstudio sketch slack visual-studio-code vlc xquartz gqrx firefox chromium docker kitty zotero slack zoom discord obsidian arduino android-studio android-sdk figma
     # osxfuse postgres
-    brew install ncdu stunnel pyenv wget git-lfs neovim fzf
+    brew install ncdu stunnel pyenv wget git-lfs fzf
     brew tap homebrew/cask-fonts
     brew install font-fira-code
 fi
 
 
 if [[ $APPS =~ ^[Yy]$ && $MAC =~ ^[Nn]$ ]]; then
-    sudo apt install git-lfs zsh neovim tmux fzf ncdu stunnel4
+    sudo apt install git-lfs zsh tmux fzf ncdu stunnel4
+    #sudo snap install nvim  --classic
 fi
 
 git lfs install
 
-# node / nvm
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.0/install.sh | bash
 
 # GIT ---------------------------------
 echo "Installing git and git-lfs..."
@@ -66,9 +65,15 @@ ln -sf $DIR/bash/bash_profile ~/.bash_profile
 ln -sf $DIR/bash/bashrc ~/.bashrc
 ln -sf $DIR/bash/inputrc ~/.inputrc
 
+# TMUX --------------------
+ln -sf $DIR/tmux/tmux.conf ~/.tmux.conf
+
+## BINARIES ----------------
+ln -sf $DIR/bin ~/.bin
+
 echo "Installing NVM and latest nodejs..."
 # node / nvm
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.0/install.sh | bash
+wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -76,28 +81,24 @@ export NVM_DIR="$HOME/.nvm"
 # install latest node
 nvm install stable
 
-npm install -g yarn expo-cli
 
-# ZSH
-echo "Installing oh-my-zsh and oh-my-git..."
-ln -sf $DIR/zsh ~/.zsh
-ln -sf $DIR/zshrc ~/.zshrc
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-sh -c "$(curl -fsSL https://git.io/zinit-install)"
-git clone https://github.com/arialdomartini/oh-my-git.git ~/.oh-my-git && echo source ~/.oh-my-git/prompt.sh >> ~/.profile
+## LUNARVIM ---------------------------
+# pre-reqs
 
-# TMUX --------------------
-ln -sf $DIR/tmux/tmux.conf ~/.tmux.conf
+echo "Installing lunarvim requirements..."
+# 1. rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+#export PATH="$HOME/.cargo/bin:$PATH"
+source "$HOME/.cargo/env"
 
-## BINARIES ----------------
-ln -sf $DIR/bin ~/.bin
+# 2. build tools
+sudo apt install -y build-essential
 
-# VIM ----------------------------------
-# echo "Linking NeoVim config..."
-# mkdir -p ~/.config/nvim
+# 3. Neovim
+bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/rolling/utils/installer/install-neovim-from-release)
+
+echo "Installing lunarvim..."
 LV_BRANCH='release-1.2/neovim-0.8' bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/fc6873809934917b470bff1b072171879899a36b/utils/installer/install.sh)
-# ln -sf $DIR/vim/init.vim ~/.config/nvim/init.vim
-# ln -sf $DIR/vim/coc-settings.json ~/.config/nvim/coc-settings.json
 
 # overwrite vi executables
 #sudo rm /usr/bin/vi
@@ -105,25 +106,20 @@ LV_BRANCH='release-1.2/neovim-0.8' bash <(curl -s https://raw.githubusercontent.
 #sudo ln -s /usr/local/bin/nvim /usr/bin/vi
 #sudo ln -s /usr/local/bin/nvim /usr/bin/vim
 
-# rm -rf ~/.vim
-## TODO: install minpac? pathogen?
-# push w/o logging in
 #ssh -vT git@github.com
 
 
 ## KITTY --------------
 # mkdir -p ~/.config/kitty
 # ln -sf $DIR/kitty/kitty.conf ~/.config/kitty/kitty.conf
-ln -sf $DIR/kitty ~/.config/kitty
+#ln -sf $DIR/kitty ~/.config/kitty
 
 ## TOOLS -----------------------------
 # fzf
 echo "Installing fzf..."
 # echo "Say NO to auto-completion for performance"
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/src/fzf
-~/src/fzf/install
-#git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-#~/.fzf/install
+git clone --depth 1 https://github.com/junegunn/fzf.git $DIR/fzf
+$DIR/fzf/install
 
 # ranger
 # mkdir -p ~/.config/ranger
@@ -134,6 +130,8 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/src/fzf
 
 # PYTHON -----------------------------------
 # ipython settings
+
+echo "Setting ipython settings..."
 mkdir -p ~/.ipython/profile_default
 ln -sf $DIR/python/ipython_config.py ~/.ipython/profile_default/ipython_config.py
 
@@ -155,6 +153,19 @@ ln -sf $DIR/python/ipython_config.py ~/.ipython/profile_default/ipython_config.p
 #     fi
 # fi
 
+# ZSH
+echo "Installing oh-my-zsh and oh-my-git..."
+rm -rf $HOME/.oh-my-zsh
+ln -sf $DIR/zsh ~/.zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+sh -c "$(curl -fsSL https://git.io/zinit-install)"
+git clone https://github.com/arialdomartini/oh-my-git.git ~/.oh-my-git && echo source ~/.oh-my-git/prompt.sh >> ~/.profile
+
+rm ~/.zshrc
+ln -sf $DIR/zshrc ~/.zshrc
+
+
+
 
 if [[ $DOCS =~ ^[Yy]$ ]]; then
     mkdir -p ~/.ssh
@@ -169,11 +180,11 @@ if [[ $DOCS =~ ^[Yy]$ ]]; then
     chmod 700 ~/.ssh
 fi
 
-if [ ! -f /etc/environment ]; then
-    # Create an empty env file.
-    echo "Creating an empty environment variables file at /etc/environment..."
-    sudo touch /etc/environment
-fi
+#if [ ! -f /etc/environment ]; then
+#    # Create an empty env file.
+#    echo "Creating an empty environment variables file at /etc/environment..."
+#    sudo touch /etc/environment
+#fi
 
 # if [[ $MAC =~ ^[Yy]$ ]]; then
 

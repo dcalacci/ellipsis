@@ -24,12 +24,12 @@ export CUDA_HOME="/usr/local/cuda"
 # add android tools
 # FOR OSX ONLY
 # TODO: Check if on OSX
-export PATH="$HOME/Library/Android/sdk/platform-tools/:$PATH"
-export PATH="$HOME/Library/Android/sdk/tools/bin/:$PATH"
+#export PATH="$HOME/Library/Android/sdk/platform-tools/:$PATH"
+#export PATH="$HOME/Library/Android/sdk/tools/bin/:$PATH"
 
-export PATH="$PATH:$HOME/src/flutter/bin"
+#export PATH="$PATH:$HOME/src/flutter/bin"
 
-export PATH="/opt/homebrew/bin:$PATH"
+#export PATH="/opt/homebrew/bin:$PATH"
 
 
 
@@ -183,35 +183,27 @@ export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# conda
 
+
+
+# }}}
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/usr/local/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/home/dcalacci/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/usr/local/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/usr/local/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "/home/dcalacci/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/dcalacci/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/usr/local/anaconda3/bin:$PATH"
+        export PATH="/home/dcalacci/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
 
 [[ -z $TMUX ]] || conda deactivate; conda activate base       #   + TMUX fix
-
-# Johnny Decimal
-autoload -Uz compinit
-compinit
-export JOHNNYDECIMAL_BASE="/Users/dcalacci/google-drive"
-source ~/src/zsh-johnnydecimal/johnnydecimal.zsh
-
-
-
-# }}}
 
 # Functions {{{
 
@@ -308,6 +300,9 @@ zinit light-mode for \
 
 
 # pnpm
-export PNPM_HOME="/Users/dcalacci/Library/pnpm"
+#export PNPM_HOME="/Users/dcalacci/Library/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 # pnpm end
+
+
+
