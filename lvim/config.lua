@@ -122,7 +122,7 @@ lvim.builtin.cmp.mapping["<S-Tab>"] = cmp.mapping(shift_tab, { "i", "c" })
 
 vim.o.updatetime = 250
 -- vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
-vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]]
+-- vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]]
 
 -- Use which-key to add extra bindings with the leader-key prefix
 lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
@@ -189,7 +189,7 @@ lvim.builtin.treesitter.highlight.enabled = true
 -- require("lvim.lsp.manager").setup("pylsp", opts)
 
 
-require 'lspconfig'.r_language_server.setup {}
+-- require 'lspconfig'.r_language_server.setup {}
 
 -- -- you can set a custom on_attach function that will be used for all the language servers
 -- -- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
@@ -258,216 +258,198 @@ linters.setup {
 -- Additional Plugins
 lvim.plugins = {
   {
-    'jalvesaq/Nvim-R',
-    config = function()
-      -- vim.cmd("let R_assign = 0")
-      -- vim.cmd("let R_nvim_wd = 1")
-      vim.cmd("let R_csv_app = 'terminal:vd'")
-    end,
-  },
-  { "github/copilot.vim" },
-  { "skywind3000/asyncrun.vim" },
-  { "skywind3000/asynctasks.vim" },
-  { "hkupty/iron.nvim" },
-  { 'GCBallesteros/jupytext.vim' },
-  { "rebelot/kanagawa.nvim" },
-  {
-    "folke/trouble.nvim",
-    cmd = "TroubleToggle",
-  },
-  {
-    "tpope/vim-fugitive",
-    cmd = {
-      "G",
-      "Git",
-      "Gdiffsplit",
-      "Gread",
-      "Gwrite",
-      "Ggrep",
-      "GMove",
-      "GDelete",
-      "GBrowse",
-      "GRemove",
-      "GRename",
-      "Glgrep",
-      "Gedit"
+    { 'github/copilot.vim' },
+    { "skywind3000/asyncrun.vim" },
+    { "skywind3000/asynctasks.vim" },
+    { "hkupty/iron.nvim" },
+    { 'GCBallesteros/jupytext.vim' },
+    { "rebelot/kanagawa.nvim" },
+    {
+      "folke/trouble.nvim",
+      cmd = "TroubleToggle",
     },
-    ft = { "fugitive" }
-  },
-  { "maxmellon/vim-jsx-pretty" },
-  { 'burner/vim-svelte' },
-  { "HerringtonDarkholme/yats.vim" },
-  {
-    "norcalli/nvim-colorizer.lua",
-    config = function()
-      require("colorizer").setup({ "*" }, {
-        RGB = true, -- #RGB hex codes
-        RRGGBB = true, -- #RRGGBB hex codes
-        RRGGBBAA = true, -- #RRGGBBAA hex codes
-        rgb_fn = true, -- CSS rgb() and rgba() functions
-        hsl_fn = true, -- CSS hsl() and hsla() functions
-        css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-        css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-      })
+    {
+      "tpope/vim-fugitive",
+      cmd = {
+        "G",
+        "Git",
+        "Gdiffsplit",
+        "Gread",
+        "Gwrite",
+        "Ggrep",
+        "GMove",
+        "GDelete",
+        "GBrowse",
+        "GRemove",
+        "GRename",
+        "Glgrep",
+        "Gedit"
+      },
+      ft = { "fugitive" }
+    },
+    { "maxmellon/vim-jsx-pretty" },
+    { 'burner/vim-svelte' },
+    { "HerringtonDarkholme/yats.vim" },
+    {
+      "norcalli/nvim-colorizer.lua",
+      config = function()
+        require("colorizer").init({ "*" }, {
+          RGB = true, -- #RGB hex codes
+          RRGGBB = true, -- #RRGGBB hex codes
+          RRGGBBAA = true, -- #RRGGBBAA hex codes
+          rgb_fn = true, -- CSS rgb() and rgba() functions
+          hsl_fn = true, -- CSS hsl() and hsla() functions
+          css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+          css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+        })
+      end,
+    },
+    {
+      "sindrets/diffview.nvim",
+      event = "BufRead",
+    },
+    {
+      "pwntester/octo.nvim",
+      event = "BufRead",
+    },
+    {
+      "simrat39/symbols-outline.nvim",
+      cmd = "SymbolsOutline",
+    },
+    "tpope/vim-surround",
+    keys = { "c", "d", "y" },
+    -- make sure to change the value of `timeoutlen` if it's not triggering correctly, see https://github.com/tpope/vim-surround/issues/117
+    init = function()
+      vim.o.timeoutlen = 500
     end,
-  },
-  {
-    'wfxr/minimap.vim',
-    run = "cargo install --locked code-minimap",
-    cmd = { "Minimap", "MinimapClose", "MinimapToggle", "MinimapRefresh", "MinimapUpdateHighlight" },
-    config = function()
-      vim.cmd("let g:minimap_width = 5")
-      vim.cmd("let g:minimap_auto_start = 0")
-      vim.cmd("let g:minimap_auto_start_win_enter = 0")
-    end,
-  },
-  {
-    "sindrets/diffview.nvim",
-    event = "BufRead",
-  },
-  {
-    "pwntester/octo.nvim",
-    event = "BufRead",
-  },
-  {
-    "simrat39/symbols-outline.nvim",
-    cmd = "SymbolsOutline",
-  },
-  "tpope/vim-surround",
-  keys = { "c", "d", "y" },
-  -- make sure to change the value of `timeoutlen` if it's not triggering correctly, see https://github.com/tpope/vim-surround/issues/117
-  setup = function()
-    vim.o.timeoutlen = 500
-  end,
-  {
-    'tikhomirov/vim-glsl'
-  },
-  { 'timtro/glslView-nvim',
-    ft = 'glsl'
-  },
-  {
-    "iamcco/markdown-preview.nvim",
-    run = "cd app && npm install",
-    ft = "markdown",
-  },
-  {
-    'junegunn/goyo.vim',
-    config = function()
-      vim.cmd("set lbr")
-      vim.cmd("set wrap")
-    end
+    {
+      'tikhomirov/vim-glsl'
+    },
+    { 'timtro/glslView-nvim',
+      ft = 'glsl'
+    },
+    {
+      "iamcco/markdown-preview.nvim",
+      run = "cd app && npm install",
+      ft = "markdown",
+    }
   }
-}
+};
 
--- Autocommands (https://neovim.io/doc/user/autocmd.html)
--- lvim.autocommands.custom_groups = {
---   { "BufWinEnter", "*.lua", "setlocal ts=8 sw=8" },
--- }
 
-lvim.autocommands.custom_groups = {
+lvim.autocommands = {
   -- { "VimLeave", "*", "if exists(g:SendCmdToR) && string(g:SendCmdToR) != 'function(SendCmdToR_fake)' | call RQuit('nosave') | endif" },
-  { "FileType", "rmd", "set foldmarker=```{,```" },
-  { "FileType", "rmd", "setlocal foldmethod=marker" },
-}
+  --  {
+  --    "FileType",
+  --    {
+  --      pattern = "rmd",
+  --      cmd = "set foldmarker=```{,```",
+  --    },
+  --    "FileType",
+  --    {
+  --      "rmd",
+  --      "setlocal foldmethod=marker"
+  --    },
+};
 
 -- IronRepl
 
-local iron = require("iron.core")
+-- local iron = require("iron.core")
 
-iron.setup {
-  config = {
-    repl_definition = {
-      r = {
-        over_ssh = {
-          command = { "ssh", "login@university.org", "R", "--no-save" }
-        },
-        boulder = {
-          command = { "zsh" }
-        },
-        here = {
-          command = { "R", "--no-save" }
-        }
-      },
-      rmd = {
-        over_ssh = {
-          command = { "ssh", "login@university.org", "R", "--no-save" }
-        },
-        here = {
-          command = { "R", "--no-save" }
-        }
-      },
-      -- sometimes I render md using Rmd
-      md = {
-        over_ssh = {
-          command = { "ssh", "login@university.org", "R", "--no-save" }
-        },
-        here = {
-          command = { "R", "--no-save" }
-        }
-      },
+-- iron.setup {
+--   config = {
+--     repl_definition = {
+--       r = {
+--         over_ssh = {
+--           command = { "ssh", "login@university.org", "R", "--no-save" }
+--         },
+--         boulder = {
+--           command = { "zsh" }
+--         },
+--         here = {
+--           command = { "R", "--no-save" }
+--         }
+--       },
+--       rmd = {
+--         over_ssh = {
+--           command = { "ssh", "login@university.org", "R", "--no-save" }
+--         },
+--         here = {
+--           command = { "R", "--no-save" }
+--         }
+--       },
+--       -- sometimes I render md using Rmd
+--       md = {
+--         over_ssh = {
+--           command = { "ssh", "login@university.org", "R", "--no-save" }
+--         },
+--         here = {
+--           command = { "R", "--no-save" }
+--         }
+--       },
 
-      nim = {
-        inim = {
-          command = { "inim" }
-        }
-      },
-      text = {
-        bash = {
-          command = { "zsh" }
-        }
-      },
+--       nim = {
+--         inim = {
+--           command = { "inim" }
+--         }
+--       },
+--       text = {
+--         bash = {
+--           command = { "zsh" }
+--         }
+--       },
 
-    }
-  },
-  repl_open_cmd = "botright vertical split",
-  preferred = {
-    r = "boulder",
-    rmd = "here",
-    nim = "inim",
-    text = "bash"
-  }
-}
+--     }
+--   },
+--   repl_open_cmd = "botright vertical split",
+--   preferred = {
+--     r = "boulder",
+--     rmd = "here",
+--     nim = "inim",
+--     text = "bash"
+--   }
+-- }
 
 
-function tab(fallback)
-  local methods = require("lvim.core.cmp").methods
-  local cmp = require "cmp"
-  local luasnip = require "luasnip"
-  local copilot_keys = vim.fn["copilot#Accept"]()
-  if cmp.visible() then
-    cmp.select_next_item()
-  elseif vim.api.nvim_get_mode().mode == "c" then
-    fallback()
-  elseif copilot_keys ~= "" then -- prioritise copilot over snippets
-    -- Copilot keys do not need to be wrapped in termcodes
-    vim.api.nvim_feedkeys(copilot_keys, "i", true)
-  elseif luasnip.expandable() then
-    luasnip.expand()
-  elseif methods.jumpable() then
-    luasnip.jump(1)
-  elseif methods.check_backspace() then
-    fallback()
-  else
-    methods.feedkeys("<Plug>(Tabout)", "")
-  end
-end
+-- function tab(fallback)
+--   local methods = require("lvim.core.cmp").methods
+--   local cmp = require "cmp"
+--   local luasnip = require "luasnip"
+--   local copilot_keys = vim.fn["copilot#Accept"]()
+--   if cmp.visible() then
+--     cmp.select_next_item()
+--   elseif vim.api.nvim_get_mode().mode == "c" then
+--     fallback()
+--   elseif copilot_keys ~= "" then -- prioritise copilot over snippets
+--     -- Copilot keys do not need to be wrapped in termcodes
+--     vim.api.nvim_feedkeys(copilot_keys, "i", true)
+--   elseif luasnip.expandable() then
+--     luasnip.expand()
+--   elseif methods.jumpable() then
+--     luasnip.jump(1)
+--   elseif methods.has_words_before() then
+--     fallback()
+--   else
+--     methods.feedkeys("<Plug>(Tabout)", "")
+--   end
+-- end;
 
-function shift_tab(fallback)
-  local methods = require("lvim.core.cmp").methods
-  local luasnip = require "luasnip"
-  local cmp = require "cmp"
-  if cmp.visible() then
-    cmp.select_prev_item()
-  elseif vim.api.nvim_get_mode().mode == "c" then
-    fallback()
-  elseif methods.jumpable(-1) then
-    luasnip.jump(-1)
-  else
-    local copilot_keys = vim.fn["copilot#Accept"]()
-    if copilot_keys ~= "" then
-      methods.feedkeys(copilot_keys, "i")
-    else
-      methods.feedkeys("<Plug>(Tabout)", "")
-    end
-  end
-end
+-- function shift_tab(fallback)
+--   local methods = require("lvim.core.cmp").methods
+--   local luasnip = require "luasnip"
+--   local cmp = require "cmp"
+--   if cmp.visible() then
+--     cmp.select_prev_item()
+--   elseif vim.api.nvim_get_mode().mode == "c" then
+--     fallback()
+--   elseif methods.jumpable(-1) then
+--     luasnip.jump(-1)
+--   else
+--     local copilot_keys = vim.fn["copilot#Accept"]()
+--     if copilot_keys ~= "" then
+--       methods.feedkeys(copilot_keys, "i")
+--     else
+--       methods.feedkeys("<Plug>(Tabout)", "")
+--     end
+--   end
+-- end;

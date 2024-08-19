@@ -9,6 +9,7 @@ export PATH="$HOME/usr/bin:$PATH"                             # <-- personal stu
 export PATH="$HOME/.cargo/bin:$PATH"                          # <-- cargo
 export PATH="$HOME/.luarocks/bin:$PATH"                       # <-- LuaRocks
 # export PATH="$HOME/.gem/ruby/2.3.0/bin:$PATH"                 # <-- ruby gem
+export PATH="$PATH:/opt/homebrew/lib/ruby/gems/3.3.0/bin"
 export PATH="$HOME/.npm-packages/bin:$PATH"                   # (node installer) npm config set prefix "${HOME}/.npm-packages"
 # export PATH="$HOME/.yarn/bin:$PATH"                           # <-- yarn (node)
 export PATH="$HOME/go/bin:$PATH"                              # <-- go
@@ -31,17 +32,6 @@ export CUDA_HOME="/usr/local/cuda"
 
 #export PATH="/opt/homebrew/bin:$PATH"
 
-
-
-# source "$HOME/venvs/base/bin/activate"                       	# <-- Activate the Python
-# }}}
-
-# $MANPATH {{{
-# export MANPATH="/usr/local/man:/usr/share/man:$MANPATH"
-# export MANPATH="/opt/share/man:/opt/local/share/man:/opt/local/libexec/gnubin/man:$MANPATH"
-# export MANPATH="$HOME/.fzf/man:$MANPATH"
-# export MANPATH="$MANPATH:/opt/anaconda3/man:/opt/anaconda3/share/man"
-# }}} no need, man smart, man good, if set, man breaks in tmux
 
 # ZSH init {{{
 export ZSH="$HOME/.zsh"
@@ -138,16 +128,16 @@ export SAVEHIST=10000
 export HISTFILESIZE=-1
 
 # programs env opts
-export SCHRODINGER="/opt/schrodinger/suites2021-4"
-export SCHRODINGER_ALLOW_UNSAFE_MULTIPROCESSING=1 #FUCK OFF
-export PYMOL4MAESTRO="/opt/anaconda3/envs/pymol/bin/"
+# export SCHRODINGER="/opt/schrodinger/suites2021-4"
+# export SCHRODINGER_ALLOW_UNSAFE_MULTIPROCESSING=1 #FUCK OFF
+# export PYMOL4MAESTRO="/opt/anaconda3/envs/pymol/bin/"
 # export ILOG_CPLEX_PATH="/Applications/IBM/ILOG/CPLEX_Studio128"
 # export JULIA_PKGDIR="/Users/laurenzi/.julia"
 export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
-export SCHRODINGER_SCRIPTS="$HOME/usr/src/schrodinger_utils/scripts"
-export XLSCRIPTS="$HOME/usr/src/xlence_scripts"
-export BIOTOOLS="$HOME/usr/src/BioTools"
-export PTPYTHON_CONFIG_HOME="$HOME/.config/ptpython"
+# export SCHRODINGER_SCRIPTS="$HOME/usr/src/schrodinger_utils/scripts"
+# export XLSCRIPTS="$HOME/usr/src/xlence_scripts"
+# export BIOTOOLS="$HOME/usr/src/BioTools"
+# export PTPYTHON_CONFIG_HOME="$HOME/.config/ptpython"
 
 # language environment
 export LANG=en_US.UTF-8
@@ -184,6 +174,21 @@ export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 
+# # init conda based on arch
+# source ~/attic/custrc/.condarc
+# if [[ $(uname -m) == 'x86_64' ]]; then
+#     init_conda_intel
+#     echo "conda x86_64 is activated"
+#     # uncomment following line if using homebrew
+#     # eval "$(/usr/local/bin/brew shellenv)"
+# else
+#     init_conda
+#     echo "conda m1 is activated"
+#     # uncomment following line if using homebrew
+#     # eval "$(/opt/homebrew/bin/brew shellenv)"
+# fi
+
+# [[ -z $TMUX ]] || conda deactivate; conda activate base       #   + TMUX fix
 
 
 # }}}
@@ -202,8 +207,27 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+# __conda_setup="$('/Users/dcalacci/minconda3_x86/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/Users/dcalacci/minconda3_x86/etc/profile.d/conda.sh" ]; then
+#         . "/Users/dcalacci/minconda3_x86/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/Users/dcalacci/minconda3_x86/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
+# # <<< conda initialize <<<
+# [[ -z $TMUX ]] || conda deactivate; conda activate base       #   + TMUX fix
 
-[[ -z $TMUX ]] || conda deactivate; conda activate base       #   + TMUX fix
+# Johnny Decimal
+# autoload -Uz compinit
+# compinit
+# export JOHNNYDECIMAL_BASE="/Users/dcalacci/google-drive"
+# source ~/src/zsh-johnnydecimal/johnnydecimal.zsh
+
+# }}}
 
 # Functions {{{
 
@@ -249,7 +273,6 @@ alias tflip='echo "(╯°□°)╯︵ ┻━┻"'
 alias clock='tty-clock -c -f %d-%m-%Y'
 alias vim=nvim
 alias ptpy='ptipython'
-alias vxl='/opt/VirtualGL/bin/vglconnect -s xlenceVPN'
 alias fuck='killall -9'
 
 # }}}
@@ -305,4 +328,36 @@ export PATH="$PNPM_HOME:$PATH"
 # pnpm end
 
 
+## I think only for mac?
+export PATH="/opt/homebrew/opt/openssl@3/bin:$PATH"
 
+export LDFLAGS="-L/opt/homebrew/opt/openssl@3/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/openssl@3/include"
+export PATH="/opt/homebrew/opt/openssl@1.1/bin:$PATH"
+
+
+export PATH="/opt/homebrew/opt/sqlite/bin:$PATH"
+export PKG_CONFIG_PATH="/opt/homebrew/opt/sqlite/lib/pkgconfig"
+export LDFLAGS="-L/opt/homebrew/opt/sqlite/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/sqlite/include"
+export PATH="/opt/homebrew/sbin:$PATH"
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
+. /opt/homebrew/opt/asdf/libexec/asdf.sh
+
+. /opt/homebrew/opt/asdf/libexec/asdf.sh
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/dcalacci/bin/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/dcalacci/bin/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/dcalacci/bin/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/dcalacci/bin/google-cloud-sdk/completion.zsh.inc'; fi
+export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
+
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)

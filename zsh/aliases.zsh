@@ -18,6 +18,9 @@ autoload -Uz run-help
 autoload -Uz run-help-git
 alias help=run-help
 
+# ssh with kitty
+alias ssh="kitty +kitten ssh"
+
 # zshrc
 alias zshrc='$EDITOR ~/.zshrc' # Quick access to the ~/.zshrc file
 alias reload='source $HOME/.zshrc'
