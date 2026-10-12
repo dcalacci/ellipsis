@@ -18,15 +18,34 @@
   ui = true
 
 [core]
-  excludesfile = ~/.gitignore
+  # setup.sh links git/gitignore here, not to ~/.gitignore
+  excludesfile = ~/.config/git/ignore
   editor = nvim
+  pager = delta
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  navigate = true
+  line-numbers = true
+  syntax-theme = Nord
+
+[diff]
+  colorMoved = default
+
+[merge]
+  conflictstyle = zdiff3
+
+[rerere]
+  enabled = true
 
 [apply]
   whitespace = nowarn
 
 [user]
-  email = dcalacci@media.mit.edu
-  name = Dan Calacci
+  email = dana@dcalacci.net
+  name = Dana Calacci
 
 [branch]
   autosetuprebase = always

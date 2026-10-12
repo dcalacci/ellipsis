@@ -2,57 +2,108 @@
 
 ... very okay dotfiles
 
-Set of dotfiles, including various scripts and tools I use on a 2020 macbook air with a very
-unfortunate cooling problem.
+## Setting up a new Mac
+
+```sh
+xcode-select --install          # if you don't already have it
+git clone git@github.com:dcalacci/ellipsis.git ~/attic/ellipsis
+cd ~/attic/ellipsis
+./setup.sh --all
+```
+
+If you don't have SSH access to GitHub yet, clone over HTTPS, run
+`./setup.sh --ssh` first to generate a key, then `gh auth login` and
+`git remote set-url origin git@github.com:dcalacci/ellipsis.git`.
+
+`setup.sh` is safe to re-run. Anything already in place is skipped, and real
+files sitting where a symlink should go get moved to
+`~/.ellipsis-backup/<timestamp>/` rather than deleted. `--dry-run` prints what
+it would do and touches nothing.
+
+### Steps
+
+Run with no flags for an interactive prompt, or pick steps:
+
+| flag | what it does |
+| --- | --- |
+| `--all` | brew core+work+media, dotfiles, shell, nvim, languages, ssh |
+| `--brew core,work` | just those Brewfile tiers |
+| `--dotfiles` | symlinks only |
+| `--shell` | zinit + tpm |
+| `--nvim` | sync the LazyVim plugin set |
+| `--langs` | nvm/node, rustup, pipx tools, miniforge, git-lfs |
+| `--ssh` | generate a per-machine ed25519 key and write `~/.ssh/config` |
+| `--macos` | system defaults (keyboard repeat, Finder, Dock, screenshots) |
+| `--wm` | yabai + skhd and their configs |
+| `--dry-run` | combine with any of the above |
+
+### Package tiers
+
+Brewfiles live in `brew/` and are plain `brew bundle` input, so you can run any
+of them by hand:
+
+- **core** — shell, CLI, terminal, fonts, browsers, the Proton suite, Tailscale.
+  Everything needed before the machine is usable.
+- **work** — research and writing: Obsidian, Zotero, R/RStudio, Quarto, MacTeX,
+  Linear, Slack, Zoom, Office, Docker, the editors, the language toolchains.
+- **media** — rekordbox, Ableton, Audacity, OBS, VLC, and desk utilities.
+- **heavy** — Adobe CC, Android Studio, Cura, XQuartz. ~20GB. Opt in.
+- **wm** — yabai and skhd. Needs SIP partially disabled to be fully useful.
+
+Things brew can't install, printed again at the end of a run: OneTagger,
+Lexicon, and the Mac App Store apps (Magnet, Bear, Goodnotes — use `mas`).
+
+## What's in here
+
+### neovim
+
+LazyVim, configured in `nvim/`, symlinked to `~/.config/nvim`.
+
+This replaced LunarVim in October 2026. LunarVim's last meaningful release was
+May 2024, it only runs against neovim 0.9.x, and it has no active maintainers.
+The old config is still in `lvim/` for reference but nothing installs it.
+
+The port keeps what the lvim config actually did:
+
+- `<space>` leader, kanagawa colorscheme, format on save
+- `<leader>R` for iron.nvim REPL send — R, Rmd, Quarto, Python, shell
+- `<leader>A` for asynctasks (`AsyncTask render` on an Rmd)
+- jupytext so `.ipynb` files open as Rmd
+- Copilot, plus the LazyVim Claude Code extra
+- R support via R.nvim, with `R_pdfviewer` set to open in Preview
+- fugitive, diffview, octo, aerial, trouble, zen-mode (`<leader>&`, was Goyo)
+- ruff instead of the old black + flake8 pair
+
+### kitty
+
+`kitty/kitty.conf`, symlinked to `~/.config/kitty`. Font is **BlexMono NF**
+(IBM Plex Mono Nerd Font), which `Brewfile.core` installs — if the terminal
+renders in a fallback font, check `kitty +list-fonts | grep -i blex`.
+
+### zsh
+
+zinit for plugins, with a hand-rolled prompt in `zsh/prompt.zsh`. The old
+`setup.sh` also installed oh-my-zsh and oh-my-git, neither of which `zshrc`
+ever sourced; that's gone.
+
+Machine-specific settings that shouldn't be committed go in `~/.zshrc.local`,
+which `zshrc` sources last if it exists.
+
+### tmux
+
+`tmux/tmux.conf`, prefix is `C-]`. Plugins are managed by tpm, which
+`setup.sh --shell` clones to `~/.tmux/plugins/tpm`. Press `prefix + I` inside
+tmux the first time to fetch them.
+
+### tiling window manager
+
+[yabai](https://github.com/koekeishiya/yabai) plus
+[skhd](https://github.com/koekeishiya/skhd) for keybindings, configured in
+`wm/`. Opt-in via `--wm`, since yabai's space-manipulation features need SIP
+partially disabled.
 
 ## screenshots
-Window manager with multiple terminal screens. active screen is highlighted in pink:
+
 ![multiple terminal windows w/ yabai WM](screenshots/yabai.png)
-working in one terminal in tmux:
 ![one terminal window in tmux](screenshots/tmux.png)
-finding a file in a project using `fzf` with a preview window:
 ![vim with fzf](screenshots/fzf.png)
-code structure with vista / coc:
-![vim with vista & coc](screenshots/vista.png)
-
-## vim
-
-After years of using emacs, I gave up, and now I use neovim, and make liberal use of [coc.nvim](https://github.com/neoclide/coc.nvim). It's
-like vscode but way cooler because it runs in your terminal. My init.vim is fairly
-straightforward but the general features are:
-
-- autocomplete, linting, and prettier for most languages, including R and Typescript
-- literate programming / REPL support for IPython and R
-
-some niceties:
-
-- `,f` for an overused `fzf` file pane fuzzy finder using `ripgrep`. This absolutely rules
-  and is way better than a dumb file pane taking up precious screen real estate.
-- `ctrl + j,k,h,l` to navigate windows / panes, and `vv` and `ss` to split.
-- `,V` to open a nice code map using `vista`
-- `[g` and `]g` to go through diagnostics (great for typescript)
-- `,s` to start a slime session with an ipython. you can change the interpreter pretty
-  easily, which is killer. then do `,h` or `,C` to send code.
-- `,F` to format your code perfectly every time
-
-## kitty
-
-I started using [`kitty`](https://sw.kovidgoyal.net/kitty/) sometime in 2020, after being
-exhausted by waiting more than half a second for some dumb rendering to finish in my
-terminal. now everything is super fast and I don't even have to think about it. The config in
-`kitty/kitty.conf` is mainly my color setup.
-
-## bash
-
-After about a decade using `zsh` or `fish`, I've decided I don't care anymore and am tired of
-my shell being slow.
-
-## tiling window manager
-
-I missed linux so much that i started using a tiling window manager,
-[yabai](https://github.com/koekeishiya/yabai). [koekeishiya](github.com/koekeishiya) has been
-making crazy WM software for mac osx for years and this is by far the easiest, fastest, and
-best one.
-
-I use [skhd](https://github.com/koekeishiya/skhd), as they suggest, to manage keybindings.
-`cmd+shift+m` to open my mail anywhere? yes please.

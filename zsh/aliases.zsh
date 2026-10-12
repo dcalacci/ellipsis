@@ -68,16 +68,18 @@ alias unexport='unset'
 alias rsync="rsync --progress -th"
 alias ccat='pygmentize -O style=gruvbox -f terminal16m -g'
 alias tc="tree -C"
-alias exa="exa --group-directories-first"
-alias el="exa -l --icons --colour-scale"
+# exa is unmaintained; eza is the fork that still gets updates
+alias exa="eza --group-directories-first"
+alias el="eza -l --icons --colour-scale --group-directories-first"
 alias ela="el -a"
 alias t='tail -f'
-# alias vim=nvim
-# lunar vim ???
-alias vim=vim
-#alias vim=lvim
-alias nvim=lvim
-alias edit=lvim # Vim Only!
+
+# Editor. This was LunarVim (`nvim` aliased to `lvim`) until Oct 2026.
+# LunarVim is dead; the LazyVim config in ellipsis/nvim/ is symlinked to
+# ~/.config/nvim and plain `nvim` picks it up.
+alias vim=nvim
+alias vi=nvim
+alias edit=nvim
 alias watch="env TERM=xterm-256color watch"
 alias pipupdate="pip list --local --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U"
 alias q=exit
