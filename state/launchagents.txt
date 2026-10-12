@@ -1,0 +1,8 @@
+Proton Mail Bridge.plist
+ai.openclaw.gateway.plist
+com.barco.clickshare.agent.plist
+com.google.GoogleUpdater.wake.plist
+com.google.keystone.agent.plist
+com.google.keystone.xpcservice.plist
+com.synology.SynologyDrive.plist
+org.languageTool.desktop.UninstallHelper.plist

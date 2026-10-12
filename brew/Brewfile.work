@@ -1,0 +1,82 @@
+# Brewfile.work -- research, writing, teaching, and the day job.
+#
+#   brew bundle --file=brew/Brewfile.work
+
+# ---------------------------------------------------------------- formulae --
+# writing / documents
+brew "pandoc"
+brew "imagemagick"
+brew "ocrmypdf"
+brew "ghostscript"
+brew "texlab"             # LaTeX LSP
+brew "marksman"           # markdown LSP
+
+# python
+brew "python@3.12"
+brew "uv"
+brew "pipx"
+brew "ruff"               # replaces the black + flake8 pair from the lvim config
+brew "pyright"
+
+# R needs these to build the usual spatial/stats stack from source
+brew "gsl"
+brew "jags"
+brew "gdal"
+brew "proj"
+brew "udunits"
+
+# js
+brew "node"
+brew "pnpm"
+brew "yarn"
+
+# data
+brew "postgresql@16"
+brew "libpq"
+brew "visidata"
+brew "sqlite"
+brew "duckdb"
+
+brew "openjdk@17"
+brew "ffmpeg"
+brew "yt-dlp"             # youtube-dl is dead; keep the old alias pointing here
+
+# ------------------------------------------------------------------- casks --
+# writing + knowledge
+cask "obsidian"
+cask "zotero"
+cask "quarto"
+cask "mactex-no-gui"      # ~6GB. Swap for `basictex` if you want it small.
+cask "pdf-expert"
+cask "marginnote"
+cask "macdown"
+cask "calibre"
+
+# stats / analysis
+cask "r-app"              # renamed from `r`
+cask "rstudio"
+cask "db-browser-for-sqlite"
+# Miniforge is deliberately NOT here: the cask installs into the Caskroom, but
+# zshrc's conda block looks in ~/miniforge3. `setup.sh --langs` runs the
+# upstream installer so the paths line up.
+
+# editors + dev
+cask "visual-studio-code"
+cask "cursor"
+cask "claude"
+cask "warp"
+cask "iterm2"
+cask "docker-desktop"     # renamed from `docker`
+cask "postman"
+cask "ngrok"
+
+# comms + coordination
+cask "linear"
+cask "slack"
+cask "zoom"
+cask "discord"
+cask "signal"
+cask "telegram"
+cask "fantastical"
+cask "notion"
+cask "microsoft-office"

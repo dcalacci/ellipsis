@@ -1,0 +1,15 @@
+.DS_Store
+
+# zsh completion cache, regenerated per machine
+zsh/cache/
+
+# fzf used to be git-cloned in here by setup.sh; it's a brew formula now
+fzf/
+
+# node bits left over from the tree-sitter-cli install
+node_modules/
+package-lock.json
+
+# LunarVim leftovers -- lvim/config.lua is kept for reference, the rest isn't
+lvim/plugin/
+lvim/lazy-lock.json

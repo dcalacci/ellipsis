@@ -1,0 +1,11 @@
+# Brewfile.heavy -- large installs you probably don't want on a laptop by
+# default. ~20GB all told. Pull these one at a time when you actually need them.
+#
+#   brew bundle --file=brew/Brewfile.heavy
+
+cask "adobe-creative-cloud"
+cask "android-studio"
+cask "ultimaker-cura"
+cask "xquartz"
+cask "anaconda"           # only if you need the full distribution; miniforge
+                          # in Brewfile.work covers normal conda use

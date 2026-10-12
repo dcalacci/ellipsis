@@ -1,0 +1,3 @@
+default-browser: unknown
+login-shell: /bin/zsh
+computer-name: muriel

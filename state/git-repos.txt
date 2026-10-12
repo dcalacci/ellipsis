@@ -1,0 +1,42 @@
+~/attic/02 Materials	(no origin)
+~/attic/ellipsis	git@github.com:dcalacci/ellipsis.git
+~/code/118-dissertation-proposal	git@github.com:dcalacci/dissertation-proposal.git
+~/code/242-dissertation	git@github.com:dcalacci/dissertation-proposal.git
+~/code/Courier-API-Spec	git@github.com:krisselberg/Courier-API-Spec.git
+~/code/RTP_MIT_SPRING_22	git@github.com:ofZach/RTP_MIT_SPRING_22.git
+~/code/acm-sig-rmarkdown	git@github.com:dcalacci/acm-sig-rmarkdown.git
+~/code/amazon-study	git@github.com:aberke/amazon-study.git
+~/code/amazon-study-dcalacci	git@github.com:dcalacci/amazon-study.git
+~/code/applemail-reader	(no origin)
+~/code/ar-art-project	(no origin)
+~/code/aria-analysis	git@github.com:Working-Futures/airia-analysis.git
+~/code/commutR	(no origin)
+~/code/csrankings-psu-f25	git@github.com:dcalacci/csrankings-psu-f25.git
+~/code/dana-cv	https://gitea.whimsical.business/dana/dana-cv.git
+~/code/dana-personal-site	git@github.com:dcalacci/dana-personal-site.git
+~/code/dcalacci.net	git@github.com:dcalacci/dcalacci.net.git
+~/code/discogs-seller-filter	git@github.com:dcalacci/discogs-deal-bundler.git
+~/code/dissertation	https://github.com/dcalacci/dissertation.git
+~/code/fairfare	https://github.com/dcalacci/fairfare.git
+~/code/floc-analysis	git@github.com:aberke/floc-analysis.git
+~/code/gigbox	git@github.com:dcalacci/gigbox.git
+~/code/gigbox-site	git@github.com:dcalacci/gigbox-site.git
+~/code/ice-status-tracker	https://gitea.whimsical.business/ice-ice-baby/ice-status-tracker.git
+~/code/ice-status-tracker-sourcetree	https://gitea.whimsical.business/ice-ice-baby/ice-status-tracker.git
+~/code/ipod-rekordbox	(no origin)
+~/code/mit-thesis	git@github.com:dcalacci/mit-thesis.git
+~/code/raymaker	git@github.com:RafalKucharskiPK/MaaSSim.git
+~/code/readwise-zotero	(no origin)
+~/code/rekordbox-mcp	https://github.com/davehenke/rekordbox-mcp.git
+~/code/ring-neighbors-analysis	git@github.com:dcalacci/ring-neighbors-analysis.git
+~/code/ring-site	(no origin)
+~/code/rtp	git@github.com:dcalacci/rtp.git
+~/code/shipt-calculator-paper	git@github.com:dcalacci/shipt-calculator-paper.git
+~/code/tidal-discord	git@github.com:dcalacci/tidal-discord.git
+~/code/tufte	git@github.com:dcalacci/tufte.git
+~/code/visual-playlists	(no origin)
+~/code/wage-theft-prediction	(no origin)
+~/code/weclocked	git@github.com:dcalacci/weclocked.git
+~/src/flutter	https://github.com/flutter/flutter.git
+~/src/getnf	https://github.com/ronniedroid/getnf.git
+~/src/zsh-johnnydecimal	git@github.com:dcalacci/zsh-johnnydecimal.git

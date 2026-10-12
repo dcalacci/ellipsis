@@ -1,0 +1,30 @@
+# Brewfile.media -- DJing, music production, A/V, and desk utilities.
+#
+#   brew bundle --file=brew/Brewfile.media
+#
+# Not available through brew, install by hand if you want them on this machine:
+#   OneTagger  https://onetagger.github.io
+#   Lexicon    https://www.lexicondj.com
+#   Magnet     Mac App Store (see `mas` in Brewfile.core)
+
+# ---------------------------------------------------------------- formulae --
+brew "libkeyfinder"
+brew "sox"
+brew "rubberband"
+brew "mp3val"
+brew "flac"
+
+# ------------------------------------------------------------------- casks --
+cask "rekordbox"
+cask "ableton-live-suite"
+cask "audacity"
+cask "obs"
+cask "vlc"
+cask "transmission"
+cask "balenaetcher"
+
+# desk utilities
+cask "flux-app"           # renamed from `flux`
+cask "ditto"
+cask "stats"
+cask "keycastr"

@@ -1,0 +1,32 @@
+init_conda() {
+   # >>> conda initialize >>>
+   conda_path_m1="$HOME/miniconda3"
+   __conda_setup="$('${conda_path_m1}/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+   if [ $? -eq 0 ]; then
+      eval "$__conda_setup"
+   else
+      if [ -f "${conda_path_m1}/etc/profile.d/conda.sh" ]; then
+          . "${conda_path_m1}/etc/profile.d/conda.sh"
+      else
+          export PATH="${conda_path_m1}/bin:$PATH"
+      fi
+   fi
+   unset __conda_setup
+# <<< conda initialize <<<
+}
+init_conda_intel() {
+   # >>> conda initialize >>>
+   conda_path_intel="$HOME/miniconda3_x86"
+   __conda_setup="$('${conda_path_intel}/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+   if [ $? -eq 0 ]; then
+      eval "$__conda_setup"
+   else
+      if [ -f "${conda_path_intel}/etc/profile.d/conda.sh" ]; then
+          . "${conda_path_intel}/etc/profile.d/conda.sh"
+      else
+          export PATH="${conda_path_intel}/bin:$PATH"
+      fi
+   fi
+   unset __conda_setup
+   # <<< conda initialize <<<
+}

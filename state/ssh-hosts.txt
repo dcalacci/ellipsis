@@ -1,0 +1,16 @@
+danas-laptop
+endor
+fangorn
+homelab-proxmox-local
+homelab-swag-local
+instance-20240613-154609.us-central1-a.princeton-hci-wao-dsc
+ison
+laptop
+mailbox
+megalith
+moribus
+segregation
+silvia-local
+witchy
+witchy-local
+yeahbitchmagnets

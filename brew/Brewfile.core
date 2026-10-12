@@ -1,0 +1,63 @@
+# Brewfile.core -- shell, CLI, terminal, fonts, browsers, credentials.
+# Everything here is needed before the machine is usable. Install first.
+#
+#   brew bundle --file=brew/Brewfile.core
+
+# ---------------------------------------------------------------- formulae --
+brew "coreutils"          # gls/gdate etc. zsh/aliases.zsh expects `gls`
+brew "gnu-sed"
+brew "git"
+brew "git-lfs"
+brew "git-delta"          # nicer diffs, wired up in git/gitconfig
+brew "gh"
+brew "lazygit"
+brew "zsh"
+brew "tmux"
+brew "neovim"
+brew "fzf"
+brew "fd"                 # FZF_DEFAULT_COMMAND in zshrc needs this
+brew "ripgrep"
+brew "bat"                # fzf preview window needs this
+brew "eza"                # successor to exa; zsh/aliases.zsh uses it
+brew "zoxide"
+brew "jq"
+brew "yq"
+brew "tree"
+brew "htop"
+brew "wget"
+brew "watch"
+brew "ncdu"
+brew "duf"
+brew "p7zip"
+brew "rename"
+brew "pwgen"
+brew "nmap"
+brew "tlrc"               # `tldr`
+brew "mas"                # Mac App Store CLI, for the apps brew can't reach
+brew "shellcheck"
+brew "shfmt"
+brew "luarocks"
+brew "lua-language-server"
+brew "tree-sitter"
+
+# ------------------------------------------------------------------- casks --
+cask "kitty"
+cask "alfred"
+cask "firefox"
+cask "google-chrome"
+cask "chromium"
+cask "arc"
+cask "tailscale-app"      # renamed from `tailscale` in 2025
+
+# Proton suite -- mail, drive (the Obsidian vault lives here), pass, VPN.
+cask "proton-mail"
+cask "proton-drive"
+cask "proton-pass"
+cask "proton-mail-bridge" # needed for Mail.app / mailread.py / anything IMAP
+cask "protonvpn"
+
+# ------------------------------------------------------------------- fonts --
+cask "font-blex-mono-nerd-font"   # "BlexMono NF" -- what kitty/kitty.conf sets
+cask "font-fira-code-nerd-font"
+cask "font-symbols-only-nerd-font"
+cask "font-ibm-plex-mono"

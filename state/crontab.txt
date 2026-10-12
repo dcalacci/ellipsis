@@ -1,0 +1,5 @@
+*/5 * * * * unison "$HOME/Library/Application Support/Claude/local-agent-mode-sessions/" "$HOME/Library/CloudStorage/ProtonDrive-dana@dcalacci.net-folder/attic/local-agent-mode-sessions" -batch -auto -silent -prefer newer
+*/5 * * * * unison "$HOME/attic/ai_context/" "$HOME/Library/CloudStorage/ProtonDrive-dana@dcalacci.net-folder/attic/ai_context" -batch -auto -silent -prefer newer
+*/5 * * * * unison "$HOME/attic/ai_lib/" "$HOME/Library/CloudStorage/ProtonDrive-dana@dcalacci.net-folder/attic/ai_lib" -batch -auto -silent -prefer newer
+*/5 * * * * unison "$HOME/attic/_vault/" "$HOME/Library/CloudStorage/ProtonDrive-dana@dcalacci.net-folder/attic/_vault" -batch -auto -silent -prefer newer
+*/5 * * * * unison "$HOME/attic/project-tracker/" "$HOME/Library/CloudStorage/ProtonDrive-dana@dcalacci.net-folder/attic/project-tracker" -batch -auto -silent -prefer newer

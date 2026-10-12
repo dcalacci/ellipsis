@@ -1,0 +1,15 @@
+# Brewfile.wm -- tiling window manager. Configs live in wm/.
+#
+#   brew bundle --file=brew/Brewfile.wm
+#
+# yabai's scripting addition needs SIP partially disabled, which is why this is
+# opt-in and not part of core. Without it you still get everything except
+# space manipulation. See https://github.com/asmvik/yabai/wiki
+#
+# Note: koekeishiya renamed their GitHub account to asmvik. The old
+# koekeishiya/formulae tap still resolves through a redirect, but this is the
+# current name.
+
+tap "asmvik/formulae"
+brew "asmvik/formulae/yabai"
+brew "asmvik/formulae/skhd"
