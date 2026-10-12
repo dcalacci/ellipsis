@@ -142,9 +142,9 @@ export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 # language environment
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-export EDITOR=nvim
+export EDITOR=vim
 export PAGER=less
-export VISUAL=nvim
+export VISUAL=vim
 export LESS=-R
 # export MANPAGER=most
 
@@ -195,17 +195,21 @@ export NVM_DIR="$HOME/.config/nvm"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/dcalacci/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/dcalacci/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/dcalacci/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/dcalacci/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "/Users/dcalacci/miniforge3/etc/profile.d/conda.sh" ]; then
+        . "/Users/dcalacci/miniforge3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/dcalacci/anaconda3/bin:$PATH"
+        export PATH="/Users/dcalacci/miniforge3/bin:$PATH"
     fi
 fi
 unset __conda_setup
+
+if [ -f "/Users/dcalacci/miniforge3/etc/profile.d/mamba.sh" ]; then
+    . "/Users/dcalacci/miniforge3/etc/profile.d/mamba.sh"
+fi
 # <<< conda initialize <<<
 # __conda_setup="$('/Users/dcalacci/minconda3_x86/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 # if [ $? -eq 0 ]; then
@@ -285,9 +289,9 @@ zinit cdreplay -q
 
 # other sources  {{{
 # source /opt/local/etc/profile.d/z.sh
-source ~/.fzf.zsh
-eval "$(kitty +complete setup zsh)"
-eval "$(pip completion --zsh)"
+#source ~/.fzf.zsh
+#eval "$(kitty +complete setup zsh)"
+#eval "$(pip completion --zsh)"
 # }}}
 
 # Remove duplicates from PATH (Unique)
@@ -349,7 +353,6 @@ export PATH="/opt/homebrew/sbin:$PATH"
 
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/dcalacci/bin/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/dcalacci/bin/google-cloud-sdk/path.zsh.inc'; fi
@@ -360,4 +363,7 @@ export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
 
 
 # Load Angular CLI autocompletion.
-source <(ng completion script)
+#source <(ng completion script)
+
+# OpenClaw Completion
+[ -f "/Users/dcalacci/.openclaw/completions/openclaw.zsh" ] && source "/Users/dcalacci/.openclaw/completions/openclaw.zsh"

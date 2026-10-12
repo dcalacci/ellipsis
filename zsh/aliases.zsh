@@ -1,7 +1,7 @@
 # Advanced Aliases.
 
 # ls 
-alias ls='ls -G --color=auto --group-directories-first'
+alias ls='gls -G --color=auto --group-directories-first'
 alias l='ls -lFh'     #size,show type,human readable
 alias la='ls -lAFh'   #long list,show almost all,show type,human readable
 alias lr='ls -tRFh'   #sorted by date,recursive,show type,human readable
@@ -19,7 +19,6 @@ autoload -Uz run-help-git
 alias help=run-help
 
 # ssh with kitty
-alias ssh="kitty +kitten ssh"
 
 # zshrc
 alias zshrc='$EDITOR ~/.zshrc' # Quick access to the ~/.zshrc file
@@ -75,9 +74,10 @@ alias ela="el -a"
 alias t='tail -f'
 # alias vim=nvim
 # lunar vim ???
-alias vim=lvim
+alias vim=vim
+#alias vim=lvim
 alias nvim=lvim
-alias edit=nvim # Vim Only!
+alias edit=lvim # Vim Only!
 alias watch="env TERM=xterm-256color watch"
 alias pipupdate="pip list --local --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U"
 alias q=exit
