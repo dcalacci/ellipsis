@@ -1,0 +1,55 @@
+    "com.apple.keyboard.modifiermapping.1133-45933-0" =     (
+                {
+            HIDKeyboardModifierMappingDst = 30064771300;
+            HIDKeyboardModifierMappingSrc = 30064771129;
+        },
+                {
+            HIDKeyboardModifierMappingDst = 30064771129;
+            HIDKeyboardModifierMappingSrc = 30064771300;
+        },
+                {
+            HIDKeyboardModifierMappingDst = 30064771129;
+            HIDKeyboardModifierMappingSrc = 30064771296;
+        }
+--
+    "com.apple.keyboard.modifiermapping.1452-591-0" =     (
+                {
+            HIDKeyboardModifierMappingDst = 30064771300;
+            HIDKeyboardModifierMappingSrc = 30064771129;
+        },
+                {
+            HIDKeyboardModifierMappingDst = 30064771129;
+            HIDKeyboardModifierMappingSrc = 30064771300;
+        },
+                {
+            HIDKeyboardModifierMappingDst = 30064771129;
+            HIDKeyboardModifierMappingSrc = 30064771296;
+        }
+--
+    "com.apple.keyboard.modifiermapping.1452-835-0" =     (
+                {
+            HIDKeyboardModifierMappingDst = 30064771300;
+            HIDKeyboardModifierMappingSrc = 30064771129;
+        },
+                {
+            HIDKeyboardModifierMappingDst = 30064771129;
+            HIDKeyboardModifierMappingSrc = 30064771296;
+        },
+                {
+            HIDKeyboardModifierMappingDst = 30064771129;
+            HIDKeyboardModifierMappingSrc = 30064771300;
+        }
+--
+    "com.apple.keyboard.modifiermapping.alt_handler_id-49" =     (
+                {
+            HIDKeyboardModifierMappingDst = 30064771129;
+            HIDKeyboardModifierMappingSrc = 30064771300;
+        },
+                {
+            HIDKeyboardModifierMappingDst = 30064771300;
+            HIDKeyboardModifierMappingSrc = 30064771129;
+        },
+                {
+            HIDKeyboardModifierMappingDst = 30064771129;
+            HIDKeyboardModifierMappingSrc = 30064771296;
+        }

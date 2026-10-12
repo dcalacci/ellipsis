@@ -89,6 +89,21 @@ done
 sort -o "$OUT/git-repos.txt" "$OUT/git-repos.txt"
 note "git-repos.txt" "$(wc -l <"$OUT/git-repos.txt" | tr -d ' ') repos"
 
+# Keyboard modifier remapping and input device prefs, so the new machine can
+# be made to match rather than guessed at.
+defaults -currentHost read -g 2>/dev/null | grep -A12 'com.apple.keyboard.modifiermapping' \
+  >"$OUT/modifier-mapping.txt" || : >"$OUT/modifier-mapping.txt"
+{
+  for k in com.apple.trackpad.scaling com.apple.mouse.scaling \
+           com.apple.swipescrolldirection com.apple.trackpad.forceClick \
+           com.apple.mouse.tapBehavior; do
+    printf '%s = %s\n' "$k" "$(defaults read -g "$k" 2>/dev/null || echo unset)"
+  done
+  defaults read com.apple.AppleMultitouchTrackpad 2>/dev/null \
+    | grep -iE 'Clicking|ThreeFinger|Dragging|ClickThreshold' || true
+} >"$OUT/input-prefs.txt"
+note "input-prefs.txt" "trackpad/mouse values"
+
 # Default apps / misc settings worth knowing about
 {
   echo "default-browser: $(defaults read com.apple.LaunchServices/com.apple.launchservices.secure 2>/dev/null \

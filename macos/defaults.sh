@@ -29,9 +29,25 @@ defaults write -g NSAutomaticPeriodSubstitutionEnabled -bool false
 # Full keyboard access: tab moves between all controls, not just text fields.
 defaults write -g AppleKeyboardUIMode -int 3
 
-# ------------------------------------------------------------------ trackpad --
-defaults write -g com.apple.trackpad.scaling -float 2.5
+# ------------------------------------------------------------- trackpad/mouse --
+# Read off muriel rather than guessed, so the two machines match.
+defaults write -g com.apple.trackpad.scaling -float 1.5
+defaults write -g com.apple.mouse.scaling -float 2.0
 defaults write -g com.apple.swipescrolldirection -bool true  # natural scrolling
+
+# Tap to click, two-finger right click, no three-finger drag.
+defaults write -g com.apple.mouse.tapBehavior -int 1
+defaults -currentHost write -g com.apple.mouse.tapBehavior -int 1
+defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -bool false
+defaults write com.apple.AppleMultitouchTrackpad Dragging -bool false
+defaults -currentHost write -g com.apple.trackpad.enableSecondaryClick -bool true
+
+# Force Touch on, with the default click thresholds.
+defaults write -g com.apple.trackpad.forceClick -bool true
+defaults write com.apple.AppleMultitouchTrackpad FirstClickThreshold -int 1
+defaults write com.apple.AppleMultitouchTrackpad SecondClickThreshold -int 1
 
 # -------------------------------------------------------------------- finder --
 defaults write com.apple.finder AppleShowAllFiles -bool true           # dotfiles
@@ -64,6 +80,11 @@ defaults write com.apple.screencapture disable-shadow -bool true
 # Developer menu. Safari is sandboxed hard these days so this can fail
 # depending on Full Disk Access; don't let it kill the script.
 defaults write com.apple.Safari IncludeDevelopMenu -bool true 2>/dev/null || true
+
+# -------------------------------------------------------------- hot corners --
+# Bottom-right = Quick Note (14), matching muriel. Modifier 0 = no modifier.
+defaults write com.apple.dock wvous-br-corner -int 14
+defaults write com.apple.dock wvous-br-modifier -int 0
 
 # --------------------------------------------------------------------- misc --
 defaults write com.apple.LaunchServices LSQuarantine -bool false  # no "are you sure"

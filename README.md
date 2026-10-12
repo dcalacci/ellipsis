@@ -33,7 +33,8 @@ Run with no flags for an interactive prompt, or pick steps:
 | `--nvim` | sync the LazyVim plugin set |
 | `--langs` | nvm/node, rustup, pipx tools, miniforge, git-lfs |
 | `--ssh` | generate a per-machine ed25519 key and write `~/.ssh/config` |
-| `--macos` | system defaults (keyboard repeat, Finder, Dock, screenshots) |
+| `--macos` | system defaults (keyboard repeat, trackpad, Finder, Dock, screenshots) |
+| `--keyboard` | swap Caps Lock and Control |
 | `--wm` | yabai + skhd and their configs |
 | `--dry-run` | combine with any of the above |
 
@@ -114,6 +115,25 @@ which `zshrc` sources last if it exists.
 `tmux/tmux.conf`, prefix is `C-]`. Plugins are managed by tpm, which
 `setup.sh --shell` clones to `~/.tmux/plugins/tpm`. Press `prefix + I` inside
 tmux the first time to fetch them.
+
+### keyboard
+
+`macos/keyboard-remap.sh` swaps Caps Lock and Control, replicating the mapping
+already running on muriel (Caps Lock becomes Right Control; both Controls
+become Caps Lock). macOS keys this per keyboard by vendor-product id, which is
+why a new machine doesn't inherit it. The script writes entries for every
+keyboard currently attached plus the ids already known from muriel's externals.
+`--show` prints the current state, `--reset` removes it. Takes effect at next
+login. If it misbehaves, `karabiner-elements` is in brew and works lower down.
+
+`macos/KeyBindings/DefaultKeyBinding.dict` adds the Emacs bindings macOS
+doesn't ship: `M-f`/`M-b` word motion, `M-d` and `C-w` word kill, `C-u` kill to
+line start, `M-<`/`M->` document ends, `M-c`/`M-u`/`M-l` case, `C-g` cancel.
+The ones macOS already has (`C-a` `C-e` `C-k` `C-y` `C-n` `C-p` `C-d` `C-t`)
+aren't repeated. This only reaches native Cocoa text views, so Slack, Discord,
+VS Code, Obsidian, and Firefox are unaffected; the terminal is already covered
+by `bindkey -e` in `zsh/keybindings.zsh`. Binding Option as Meta costs you the
+Option-key glyphs on those letters.
 
 ### tiling window manager
 

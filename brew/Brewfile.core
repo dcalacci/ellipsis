@@ -43,6 +43,12 @@ brew "tree-sitter"
 # ------------------------------------------------------------------- casks --
 cask "kitty"
 cask "alfred"
+# Alfred wants Cmd-Space. Free it in System Settings -> Keyboard -> Keyboard
+# Shortcuts -> Spotlight, or the two fight.
+
+# Mac App Store. Requires being signed in to the App Store first, otherwise
+# `brew bundle` reports these as failures.
+mas "Magnet", id: 441258766
 cask "firefox"
 cask "google-chrome"
 cask "chromium"

@@ -1,0 +1,65 @@
+/*
+ * Emacs keybindings for every Cocoa text field on macOS.
+ * Symlinked to ~/Library/KeyBindings/DefaultKeyBinding.dict by setup.sh.
+ *
+ * Modifier syntax:  ^ Control   ~ Option/Meta   $ Shift   @ Command
+ *
+ * macOS already gives you these for free, so they are NOT repeated here:
+ *   ^A ^E   line start/end        ^F ^B   char forward/back
+ *   ^N ^P   line down/up          ^D      delete forward
+ *   ^K      kill to end of line   ^Y      yank
+ *   ^T      transpose chars       ^O      open line
+ *   ^V      page down             ^L      center
+ *
+ * WHERE THIS WORKS: anything drawing native Cocoa text views. Finder, Mail,
+ * Notes, Safari fields, Xcode, TextEdit, most native apps.
+ *
+ * WHERE IT DOESN'T: Electron apps (Slack, Discord, VS Code, Cursor, Obsidian),
+ * Firefox, Chrome, Java apps, and terminal programs. Those each have their own
+ * key handling. kitty + zsh already give you emacs bindings via `bindkey -e`
+ * in zsh/keybindings.zsh, which covers the terminal case.
+ *
+ * TRADEOFF: binding Option as Meta costs you the Option-key special
+ * characters on those specific letters. Option-f stops producing "ƒ",
+ * Option-b stops producing "∫", and so on. Comment out the ~ bindings below
+ * if you'd rather keep them.
+ *
+ * Changes only apply to apps launched afterwards. Log out and back in.
+ */
+{
+  /* ---- word motion ------------------------------------------------- */
+  "~f"  = "moveWordForward:";
+  "~b"  = "moveWordBackward:";
+  "~$f" = "moveWordForwardAndModifySelection:";
+  "~$b" = "moveWordBackwardAndModifySelection:";
+
+  /* ---- word + line killing ------------------------------------------ */
+  "~d"        = "deleteWordForward:";
+  "~\U007F"   = "deleteWordBackward:";   /* Option-Delete */
+  "^w"        = "deleteWordBackward:";   /* emacs kill-region; closest useful analogue */
+  "^u"        = "deleteToBeginningOfLine:";
+
+  /* ---- document motion ---------------------------------------------- */
+  "~<"  = "moveToBeginningOfDocument:";
+  "~>"  = "moveToEndOfDocument:";
+  "~v"  = "pageUp:";
+
+  /* ---- case ---------------------------------------------------------- */
+  "~c"  = "capitalizeWord:";
+  "~u"  = "uppercaseWord:";
+  "~l"  = "lowercaseWord:";
+
+  /* ---- misc ----------------------------------------------------------- */
+  "^g"  = "cancelOperation:";
+  "^/"  = "undo:";
+  "^_"  = "undo:";
+  "~t"  = "transposeWords:";
+
+  /* Set-mark. Disabled by default: ^Space is taken by Spotlight out of the
+   * box, and by the input-source switcher if you have more than one. Enable
+   * it only after freeing that chord.
+   *
+   * "^ " = "setMark:";
+   * "^x" = { "^x" = "swapWithMark:"; "^m" = "selectToMark:"; };
+   */
+}

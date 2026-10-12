@@ -1,0 +1,13 @@
+com.apple.trackpad.scaling = 1.5
+com.apple.mouse.scaling = 2
+com.apple.swipescrolldirection = unset
+com.apple.trackpad.forceClick = 1
+com.apple.mouse.tapBehavior = unset
+    Clicking = 1;
+    Dragging = 0;
+    FirstClickThreshold = 1;
+    SecondClickThreshold = 1;
+    TrackpadThreeFingerDrag = 0;
+    TrackpadThreeFingerHorizSwipeGesture = 2;
+    TrackpadThreeFingerTapGesture = 0;
+    TrackpadThreeFingerVertSwipeGesture = 2;

@@ -6,6 +6,7 @@
 #   ./setup.sh --all                everything except the heavy/wm tiers
 #   ./setup.sh --brew core,work     just those Brewfile tiers
 #   ./setup.sh --dotfiles           just the symlinks
+#   ./setup.sh --macos --keyboard   system defaults + Caps Lock/Control swap
 #   ./setup.sh --dry-run --all      print what would happen, change nothing
 #   ./setup.sh --help
 #
@@ -136,6 +137,10 @@ link_dotfiles() {
 
   link python/ipython_config.py     "$HOME/.ipython/profile_default/ipython_config.py"
   link conda/.condarc               "$HOME/.condarc"
+
+  # Emacs bindings in Cocoa text fields. Only affects apps launched after.
+  link macos/KeyBindings/DefaultKeyBinding.dict \
+       "$HOME/Library/KeyBindings/DefaultKeyBinding.dict"
 }
 
 link_wm() {
@@ -294,6 +299,11 @@ apply_macos_defaults() {
   run bash "$DIR/macos/defaults.sh"
 }
 
+remap_keyboard() {
+  step "Keyboard: swap Caps Lock and Control"
+  run bash "$DIR/macos/keyboard-remap.sh"
+}
+
 final_notes() {
   cat <<EOF
 
@@ -302,9 +312,14 @@ $(printf '%s' "$c_green")Done.$(printf '%s' "$c_reset") Left to do by hand:
   * Sign in: Proton (Mail/Drive/Pass), Tailscale, Slack, Linear, Zotero, Obsidian.
   * Proton Drive needs to finish syncing before the Obsidian vault at
     "01 Notes/_vault" will open.
-  * Mac App Store apps brew can't reach -- Magnet, Bear, Goodnotes. Sign in to
-    the App Store, then: mas list   (on the old machine) to get the IDs.
+  * Sign in to the App Store BEFORE the brew step, or the \`mas\` entries
+    (Magnet) fail. Other MAS apps you had: Bear, Goodnotes. Get their ids with
+    \`mas list\` on the old machine and add them to brew/Brewfile.core.
   * Not on brew: OneTagger, Lexicon, Meeting Owl.
+  * Free Cmd-Space for Alfred: System Settings -> Keyboard -> Keyboard
+    Shortcuts -> Spotlight, untick "Show Spotlight search".
+  * Turn on FileVault and point Time Machine somewhere. muriel has FileVault
+    on but no Time Machine destination configured; a laptop wants both.
   * Open tmux and press prefix (C-]) then I to install the tmux plugins.
   * Set kitty as the default terminal and check the font renders:
     kitty +list-fonts | grep -i blex
@@ -326,7 +341,7 @@ usage() {
 }
 
 DO_BREW_TIERS=""
-DO_DOTFILES=0 DO_SHELL=0 DO_NVIM=0 DO_LANGS=0 DO_SSH=0 DO_MACOS=0 DO_WM=0
+DO_DOTFILES=0 DO_SHELL=0 DO_NVIM=0 DO_LANGS=0 DO_SSH=0 DO_MACOS=0 DO_WM=0 DO_KEYBOARD=0
 INTERACTIVE=1
 
 while [[ $# -gt 0 ]]; do
@@ -344,6 +359,7 @@ while [[ $# -gt 0 ]]; do
     --langs)     DO_LANGS=1; INTERACTIVE=0 ;;
     --ssh)       DO_SSH=1; INTERACTIVE=0 ;;
     --macos)     DO_MACOS=1; INTERACTIVE=0 ;;
+    --keyboard)  DO_KEYBOARD=1; INTERACTIVE=0 ;;
     --wm)        DO_WM=1; INTERACTIVE=0 ;;
     --dry-run)   DRY_RUN=1 ;;
     -h|--help)   usage ;;
@@ -368,6 +384,7 @@ if [[ $INTERACTIVE -eq 1 ]]; then
   ask "Install node / rust / python / conda?"  && DO_LANGS=1
   ask "Generate an SSH key?"                   && DO_SSH=1
   ask "Apply macOS system defaults?"           && DO_MACOS=1
+  ask "Swap Caps Lock and Control?"            && DO_KEYBOARD=1
   ask "Install the yabai/skhd window manager?" && DO_WM=1
 fi
 
@@ -390,5 +407,6 @@ fi
 [[ $DO_SSH      -eq 1 ]] && setup_ssh
 [[ $DO_WM       -eq 1 ]] && { brew_tier wm; link_wm; }
 [[ $DO_MACOS    -eq 1 ]] && apply_macos_defaults
+[[ $DO_KEYBOARD -eq 1 ]] && remap_keyboard
 
 final_notes
