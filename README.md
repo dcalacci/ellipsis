@@ -53,6 +53,26 @@ of them by hand:
 Things brew can't install, printed again at the end of a run: OneTagger,
 Lexicon, and the Mac App Store apps (Magnet, Bear, Goodnotes — use `mas`).
 
+### Machine state that isn't dotfiles
+
+Most of a working machine isn't config files. `macos/capture-state.sh`, run on
+the **old** machine, dumps the replayable parts into `state/`:
+
+| file | what |
+| --- | --- |
+| `Brewfile.actual` | full `brew bundle dump`, to diff against the curated tiers |
+| `r-packages.txt` | every non-base R package, with the R version it came from |
+| `vscode-extensions.txt` | VS Code extension ids |
+| `mas-apps.txt` | Mac App Store app ids |
+| `git-repos.txt` | checkout paths and their origin remotes |
+| `ssh-hosts.txt` | host alias names only, no keys |
+| `crontab.txt`, `launchagents.txt` | informational, deliberately not replayed |
+
+Commit that, then on the new machine run `macos/restore-state.sh` (interactive,
+or `--r --editors --mas --repos --all`). It will not touch cron or LaunchAgents:
+those are per-machine, and two hosts running the same unison sync jobs will
+fight over the same Proton Drive folders.
+
 ## What's in here
 
 ### neovim
